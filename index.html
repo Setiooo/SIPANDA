@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIPANDA — Sistem Integrasi Penerima Bantuan Daerah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SIPANDA — COMPLETE STYLESHEET
+   © 2025 Muhammad Setio Budi | Universitas Mayjen Sungkono
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#1d4ed8;--primary-dark:#1e3a8a;--primary-light:#eff6ff;
+  --accent:#0ea5e9;--gold:#f59e0b;--green:#16a34a;--red:#dc2626;
+  --orange:#ea580c;--yellow:#d97706;--purple:#7c3aed;
+  --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;
+  --gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;
+  --gray-700:#334155;--gray-900:#0f172a;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --font-display:'Fraunces',serif;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,.14);
+  --r:12px;--rl:20px;
+}
+body{font-family:var(--font);background:var(--gray-50);color:var(--gray-900);line-height:1.6;overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--gray-100)}
+::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:3px}
+
+/* ── WATERMARK ── */
+body::after{
+  content:"© Muhammad Setio Budi | Univ. Mayjen Sungkono";
+  position:fixed;bottom:12px;right:16px;z-index:9999;
+  font-size:.65rem;font-weight:700;color:rgba(29,78,216,.35);
+  letter-spacing:.5px;pointer-events:none;user-select:none;
+}
+
+/* ── NAVBAR ── */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--gray-200);padding:.9rem 0;
+}
+.nav-container{
+  max-width:1200px;margin:0 auto;padding:0 1.5rem;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.nav-logo{display:flex;align-items:center;gap:.75rem;cursor:pointer;flex-shrink:0}
+.logo-icon{font-size:1.8rem}
+.logo-text{font-weight:800;font-size:1.05rem;color:var(--primary);letter-spacing:-.5px}
+.logo-sub{font-size:.68rem;color:var(--gray-500)}
+.nav-links{display:flex;gap:1.25rem;margin-left:auto}
+.nav-links a{color:var(--gray-700);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--primary)}
+.nav-author{
+  display:flex;align-items:center;gap:.5rem;padding:.35rem .8rem;
+  background:linear-gradient(135deg,#eff6ff,#dbeafe);
+  border:1px solid #bfdbfe;border-radius:100px;flex-shrink:0;
+}
+.nav-author span{font-size:.95rem}
+.nav-author-name{font-size:.74rem;font-weight:700;color:var(--primary);line-height:1.2}
+.nav-author-univ{font-size:.62rem;color:var(--gray-500)}
+.btn-nav-cek{
+  background:var(--primary);color:#fff;border:none;padding:.5rem 1.1rem;
+  border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;
+  font-family:var(--font);transition:background .2s,transform .1s;white-space:nowrap;flex-shrink:0;
+}
+.btn-nav-cek:hover{background:var(--primary-dark);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 50%,#1d4ed8 100%);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;
+  padding:4rem 2rem;min-height:calc(100vh - 65px);
+  max-width:1200px;margin:0 auto;border-radius:0 0 2rem 2rem;
+}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-shape{position:absolute;border-radius:50%;opacity:.06;background:#fff}
+.shape1{width:600px;height:600px;top:-200px;right:-100px}
+.shape2{width:400px;height:400px;bottom:-150px;left:-100px}
+.dots-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.hero-content{flex:1;max-width:560px;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.9);padding:.4rem 1rem;border-radius:100px;
+  font-size:.78rem;font-weight:600;margin-bottom:.6rem;
+  animation:fadeInDown .8s ease;
+}
+.badge-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;animation:pulse 2s infinite}
+.hero-author-badge{
+  display:inline-block;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);
+  padding:.35rem .9rem;border-radius:8px;font-size:.77rem;
+  margin-bottom:1.25rem;animation:fadeInDown .8s .1s both;
+}
+.hero-author-badge strong{color:#93c5fd;font-weight:700}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(2rem,5vw,3.2rem);color:#fff;line-height:1.1;
+  margin-bottom:1.25rem;animation:fadeInUp .8s .2s both;
+}
+.title-accent{color:#60a5fa}
+.hero-desc{
+  color:rgba(255,255,255,.8);font-size:1rem;line-height:1.7;
+  margin-bottom:2rem;animation:fadeInUp .8s .4s both;
+}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:.75rem;margin-bottom:2rem;animation:fadeInUp .8s .6s both}
+.btn-primary,.btn-secondary,.btn-outline{
+  display:flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:10px;
+  font-size:.88rem;font-weight:600;cursor:pointer;font-family:var(--font);
+  border:2px solid transparent;transition:all .2s;
+}
+.btn-primary{background:#fff;color:var(--primary)}
+.btn-primary:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.btn-secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-secondary:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-outline:hover{background:rgba(255,255,255,.1);transform:translateY(-2px)}
+.hero-trust{display:flex;gap:1.5rem;flex-wrap:wrap;animation:fadeInUp .8s .8s both}
+.trust-item{color:rgba(255,255,255,.7);font-size:.8rem;display:flex;align-items:center;gap:.3rem}
+.hero-visual{flex:1;max-width:400px;z-index:1;padding-left:2.5rem}
+.dashboard-preview{
+  background:rgba(255,255,255,.08);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.15);border-radius:16px;overflow:hidden;
+  animation:fadeInUp .8s .5s both;box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.preview-header{
+  background:rgba(0,0,0,.2);padding:.7rem 1rem;
+  display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.7);font-size:.78rem;
+}
+.preview-dots{display:flex;gap:5px}
+.preview-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3)}
+.preview-body{padding:1.25rem}
+.preview-stat{margin-bottom:.9rem}
+.pstat-num{font-family:var(--font-display);font-size:1.3rem;color:#fff;font-weight:700}
+.pstat-label{color:rgba(255,255,255,.6);font-size:.72rem;margin-bottom:.3rem}
+.pstat-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.pstat-fill{height:100%;background:#60a5fa;border-radius:2px;animation:barGrow 1.5s ease .8s both}
+.pstat-fill.green{background:#4ade80}
+.preview-badges{display:flex;flex-direction:column;gap:.35rem;margin-top:.9rem}
+.pbadge{font-size:.72rem;padding:.28rem .6rem;border-radius:6px;color:#fff}
+.pbadge.green{background:rgba(74,222,128,.2)}.pbadge.yellow{background:rgba(251,191,36,.2)}.pbadge.red{background:rgba(248,113,113,.2)}
+
+/* ── SECTIONS ── */
+.statistik-section,.program-section,.manfaat-section{padding:5rem 0}
+.statistik-section{background:#fff}.program-section{background:var(--gray-50)}.manfaat-section{background:#fff}
+.section-label{
+  display:inline-block;background:var(--primary-light);color:var(--primary);
+  padding:.35rem .9rem;border-radius:100px;font-size:.78rem;font-weight:600;margin-bottom:.75rem;
+}
+.section-title{font-family:var(--font-display);font-size:1.9rem;color:var(--gray-900);margin-bottom:.5rem}
+.section-desc{color:var(--gray-500);font-size:.9rem;margin-bottom:2rem;max-width:600px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem}
+.stat-card{
+  background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r);padding:1.5rem;
+  transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.stat-icon{font-size:2rem;margin-bottom:.6rem}
+.stat-number{font-family:var(--font-display);font-size:1.9rem;font-weight:900;color:var(--primary)}
+.stat-label{color:var(--gray-500);font-size:.85rem;margin-bottom:.4rem}
+.stat-change{font-size:.77rem;color:var(--green)}
+
+.program-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.program-card{
+  background:#fff;border-radius:var(--rl);border:1px solid var(--gray-200);padding:1.5rem;
+  border-top:4px solid var(--accent);transition:transform .2s,box-shadow .2s;
+}
+.program-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.program-icon{font-size:1.8rem;margin-bottom:.6rem}
+.program-tag{display:inline-block;font-size:.7rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem}
+.program-card h3{font-size:1rem;margin-bottom:.4rem}
+.program-card p{font-size:.82rem;color:var(--gray-500);line-height:1.6;margin-bottom:.9rem}
+.program-meta{display:flex;flex-direction:column;gap:.2rem;font-size:.78rem;color:var(--gray-500);margin-bottom:.9rem}
+.program-status{display:inline-block;font-size:.75rem;font-weight:600;padding:.25rem .7rem;border-radius:100px}
+.program-status.open{background:#dcfce7;color:#15803d}
+.program-status.pending{background:#fef9c3;color:#a16207}
+
+/* MANFAAT */
+.manfaat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
+.manfaat-card{
+  background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--r);
+  padding:1.5rem;border-left:4px solid var(--primary);
+  transition:transform .2s,box-shadow .2s;
+}
+.manfaat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.manfaat-icon{font-size:1.8rem;margin-bottom:.6rem}
+.manfaat-card h4{font-size:.9rem;color:var(--gray-900);margin-bottom:.35rem}
+.manfaat-card p{font-size:.8rem;color:var(--gray-500);line-height:1.6}
+
+/* ── FOOTER ── */
+.footer{background:var(--gray-900);color:rgba(255,255,255,.7);padding:4rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-logo{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.6rem}
+.footer p{font-size:.83rem;line-height:1.7}
+.footer h4{color:#fff;margin-bottom:.85rem;font-size:.88rem}
+.footer ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.footer a{color:rgba(255,255,255,.6);text-decoration:none;font-size:.83rem;transition:color .2s}
+.footer a:hover{color:#fff}
+.footer-author-block{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:1.25rem;text-align:center;margin-bottom:1rem;
+}
+.footer-author-name{font-size:1rem;font-weight:800;color:#fff;margin-bottom:.15rem}
+.footer-author-univ{font-size:.82rem;color:#60a5fa;margin-bottom:.3rem;font-weight:600}
+.footer-author-tag{font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:.3rem}
+.footer-author-note{font-size:.72rem;color:#fbbf24;font-weight:600}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;text-align:center}
+.footer-sim{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.3rem}
+
+/* ── LOGIN ── */
+.login-layout{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.login-left{
+  background:linear-gradient(145deg,#0f172a,#1e3a8a);
+  padding:3rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;
+}
+.login-left::before{
+  content:'';position:absolute;top:0;right:0;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);
+}
+.login-brand{display:flex;align-items:center;gap:.75rem;margin-bottom:2.5rem}
+.brand-icon{font-size:2rem}.brand-name{font-weight:800;font-size:1.2rem;color:#fff}
+.brand-sub{color:rgba(255,255,255,.45);font-size:.72rem}
+.login-title{font-family:var(--font-display);font-size:2.3rem;color:#fff;line-height:1.15;margin-bottom:1rem}
+.login-desc{color:rgba(255,255,255,.7);line-height:1.7;margin-bottom:1.75rem;font-size:.92rem}
+.login-features{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.75rem}
+.lf-item{display:flex;align-items:center;gap:.7rem;color:rgba(255,255,255,.8);font-size:.85rem}
+.login-disclaimer{
+  background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.3);
+  color:#fbbf24;border-radius:10px;padding:.65rem .9rem;font-size:.78rem;
+}
+.login-author-credit{
+  margin-top:1.25rem;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);border-radius:10px;
+  padding:.9rem 1.1rem;text-align:center;
+}
+.lac-label{font-size:.67rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem}
+.lac-name{font-size:.95rem;font-weight:800;color:#fff}
+.lac-univ{font-size:.75rem;color:#60a5fa;margin-bottom:.2rem}
+.lac-copy{font-size:.68rem;color:rgba(255,255,255,.35)}
+.login-right{display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--gray-50)}
+.login-card{
+  background:#fff;border-radius:var(--rl);box-shadow:var(--shadow-lg);
+  padding:2.25rem;width:100%;max-width:420px;
+}
+.login-role-tabs{display:flex;gap:.4rem;margin-bottom:1.75rem}
+.role-tab{
+  flex:1;padding:.55rem;border-radius:8px;border:2px solid var(--gray-200);
+  background:transparent;cursor:pointer;font-family:var(--font);
+  font-size:.78rem;font-weight:600;color:var(--gray-500);transition:all .2s;
+}
+.role-tab.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.role-tab:hover:not(.active){border-color:var(--gray-300);background:var(--gray-50)}
+.login-role-label{
+  display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem;
+  padding-bottom:1.4rem;border-bottom:1px solid var(--gray-200);
+  font-weight:700;font-size:.95rem;color:var(--gray-900);
+}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--gray-700);margin-bottom:.35rem}
+.input-wrap{position:relative;display:flex;align-items:center}
+.input-icon{position:absolute;left:.85rem;font-size:.95rem;z-index:1}
+.input-wrap input,.input-wrap select{
+  width:100%;padding:.7rem .7rem .7rem 2.4rem;
+  border:2px solid var(--gray-200);border-radius:8px;
+  font-family:var(--font);font-size:.88rem;transition:border-color .2s,box-shadow .2s;background:var(--gray-50);
+}
+.input-wrap input:focus,.input-wrap select:focus{
+  outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(29,78,216,.1);background:#fff;
+}
+.input-wrap textarea{
+  width:100%;padding:.7rem .7rem .7rem 2.4rem;
+  border:2px solid var(--gray-200);border-radius:8px;
+  font-family:var(--font);font-size:.88rem;resize:vertical;min-height:80px;
+  transition:border-color .2s;background:var(--gray-50);
+}
+.input-wrap textarea:focus{outline:none;border-color:var(--primary);background:#fff}
+.toggle-pass{position:absolute;right:.75rem;background:none;border:none;cursor:pointer;font-size:.85rem;padding:.2rem}
+.form-check{display:flex;align-items:center;gap:.5rem;margin-bottom:1.4rem;font-size:.8rem}
+.form-check input{width:auto}
+.forgot-link{margin-left:auto;color:var(--primary);text-decoration:none;font-weight:600;font-size:.8rem}
+.btn-login{
+  width:100%;padding:.85rem;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;border:none;border-radius:10px;font-family:var(--font);
+  font-size:.92rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:.5rem;
+  transition:opacity .2s,transform .1s;
+}
+.btn-login:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 6px 20px rgba(29,78,216,.3)}
+.btn-arrow{font-size:1.1rem}
+.login-sim-info{
+  margin-top:1.1rem;padding:.9rem;background:var(--gray-50);
+  border-radius:8px;border:1px dashed var(--gray-300);font-size:.77rem;color:var(--gray-600);
+}
+.sim-accounts{display:flex;flex-direction:column;gap:.25rem;margin-top:.4rem}
+.sim-accounts span{color:var(--primary);cursor:pointer;font-weight:500;text-decoration:underline}
+.btn-back{
+  display:block;width:100%;margin-top:.85rem;padding:.55rem;
+  background:none;border:1px solid var(--gray-200);border-radius:8px;
+  cursor:pointer;font-family:var(--font);font-size:.83rem;color:var(--gray-500);transition:all .2s;
+}
+.btn-back:hover{background:var(--gray-50);color:var(--gray-900)}
+
+/* ── CEK STATUS PUBLIK ── */
+.cek-layout{
+  min-height:100vh;background:linear-gradient(135deg,var(--primary-light),#fff);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;position:relative;
+}
+.btn-back-top{
+  position:absolute;top:1.5rem;left:1.5rem;background:#fff;
+  border:1px solid var(--gray-200);padding:.45rem .9rem;border-radius:8px;
+  cursor:pointer;font-family:var(--font);font-size:.83rem;color:var(--gray-700);transition:all .2s;
+}
+.btn-back-top:hover{background:var(--gray-50)}
+.cek-card{
+  background:#fff;border-radius:var(--rl);box-shadow:var(--shadow-lg);
+  padding:2.25rem;width:100%;max-width:520px;
+}
+.cek-header{text-align:center;margin-bottom:1.75rem}
+.cek-icon{font-size:2.25rem;margin-bottom:.65rem}
+.cek-header h2{font-family:var(--font-display);font-size:1.5rem;color:var(--gray-900)}
+.cek-header p{color:var(--gray-500);font-size:.87rem;margin-top:.35rem}
+.btn-cek{
+  width:100%;padding:.85rem;background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;border:none;border-radius:10px;font-family:var(--font);
+  font-size:.92rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:opacity .2s,transform .1s;
+}
+.btn-cek:hover{opacity:.9;transform:translateY(-1px)}
+.cek-result{margin-top:1.75rem;padding-top:1.75rem;border-top:1px solid var(--gray-200);animation:fadeInUp .5s ease}
+.result-header{display:flex;align-items:center;gap:.9rem;margin-bottom:1.25rem}
+.result-avatar{font-size:2.25rem}
+.result-header h3{font-size:1.05rem;color:var(--gray-900)}
+.result-header p{font-size:.8rem;color:var(--gray-500)}
+.status-badge{margin-left:auto;padding:.35rem .85rem;border-radius:100px;font-size:.78rem;font-weight:700}
+.status-badge.approved{background:#dcfce7;color:#15803d}
+.status-badge.held{background:#fef9c3;color:#a16207}
+.status-badge.needs-fix{background:#ffedd5;color:#c2410c}
+.status-badge.rejected{background:#fee2e2;color:#b91c1c}
+.result-details{background:var(--gray-50);border-radius:10px;padding:.9rem;margin-bottom:.9rem}
+.detail-row{display:flex;justify-content:space-between;padding:.45rem 0;font-size:.85rem}
+.detail-row:not(:last-child){border-bottom:1px solid var(--gray-200)}
+.detail-row span{color:var(--gray-500)}
+.result-note{padding:.7rem .9rem;border-radius:8px;font-size:.83rem}
+.result-note.success{background:#dcfce7;color:#15803d}
+
+/* ── DASHBOARD LAYOUT ── */
+.dashboard-layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.sidebar{
+  background:var(--gray-900);color:#fff;
+  display:flex;flex-direction:column;padding:1.4rem;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-brand{
+  display:flex;align-items:center;gap:.7rem;
+  padding-bottom:1.4rem;margin-bottom:1.4rem;border-bottom:1px solid rgba(255,255,255,.1);
+}
+.sb-icon{font-size:1.7rem}
+.sb-name{font-weight:800;font-size:.95rem;letter-spacing:-.5px}
+#sb-role{font-size:.68rem;color:rgba(255,255,255,.4)}
+.sidebar-nav{flex:1}
+.nav-group{margin-bottom:1.4rem}
+.nav-group-label{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.45rem}
+.nav-item{
+  display:flex;align-items:center;gap:.7rem;padding:.6rem .85rem;border-radius:8px;
+  color:rgba(255,255,255,.65);text-decoration:none;font-size:.85rem;font-weight:500;
+  transition:all .2s;margin-bottom:.18rem;cursor:pointer;
+}
+.nav-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-item.active{background:var(--primary);color:#fff}
+.nav-subitem{
+  display:flex;align-items:center;gap:.7rem;padding:.5rem .85rem .5rem 2.2rem;
+  border-radius:8px;color:rgba(255,255,255,.5);text-decoration:none;
+  font-size:.8rem;font-weight:500;transition:all .2s;margin-bottom:.12rem;cursor:pointer;
+}
+.nav-subitem:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.05)}
+.nav-subitem.active{color:#60a5fa}
+.sidebar-user{
+  display:flex;align-items:center;gap:.7rem;
+  padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.1);margin-bottom:.6rem;
+}
+.user-avatar{
+  width:36px;height:36px;border-radius:50%;background:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0;
+}
+.user-name{font-size:.82rem;font-weight:600;color:#fff}
+.user-role{font-size:.68rem;color:rgba(255,255,255,.4)}
+.logout-btn{
+  margin-left:auto;background:rgba(255,255,255,.08);border:none;
+  padding:.38rem .55rem;border-radius:6px;cursor:pointer;font-size:.85rem;transition:background .2s;
+}
+.logout-btn:hover{background:rgba(220,38,38,.3)}
+.sidebar-dev-credit{
+  padding:.75rem;border-radius:10px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);text-align:center;
+}
+.sdc-label{font-size:.62rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px}
+.sdc-name{font-size:.78rem;font-weight:800;color:#93c5fd;margin:.12rem 0}
+.sdc-univ{font-size:.67rem;color:rgba(255,255,255,.38)}
+.sdc-copy{font-size:.62rem;color:rgba(255,255,255,.22);margin-top:.08rem}
+
+/* ── MAIN CONTENT ── */
+.main-content{background:var(--gray-50);overflow-y:auto}
+.content-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:1.5rem 1.75rem;background:#fff;border-bottom:1px solid var(--gray-200);
+  position:sticky;top:0;z-index:10;
+}
+.content-header h2{font-size:1.2rem;font-weight:700;color:var(--gray-900)}
+.content-header p{font-size:.82rem;color:var(--gray-500);margin-top:.1rem}
+.header-actions{display:flex;align-items:center;gap:.85rem}
+.header-dev-stamp{
+  display:flex;align-items:center;gap:.45rem;padding:.35rem .8rem;
+  background:var(--primary-light);border:1px solid #bfdbfe;border-radius:8px;
+}
+.header-dev-stamp span{font-size:.88rem}
+.hds-name{font-size:.74rem;font-weight:700;color:var(--primary);line-height:1.2}
+.hds-univ{font-size:.62rem;color:var(--gray-500)}
+.notif-btn{
+  position:relative;cursor:pointer;background:var(--gray-100);
+  padding:.5rem .85rem;border-radius:8px;font-size:.85rem;user-select:none;
+}
+.notif-badge{
+  position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;
+  border-radius:50%;font-size:.62rem;font-weight:700;width:17px;height:17px;
+  display:flex;align-items:center;justify-content:center;
+}
+.date-badge{font-size:.8rem;color:var(--gray-500)}
+.notif-panel{
+  margin:.9rem 1.75rem;background:#fff;border:1px solid var(--gray-200);
+  border-radius:var(--r);padding:1.1rem;
+}
+.notif-panel h3{font-size:.9rem;margin-bottom:.65rem}
+.notif-item{padding:.55rem .85rem;border-radius:8px;font-size:.82rem;margin-bottom:.35rem}
+.notif-item.warning{background:#fef9c3;color:#a16207}
+.notif-item.info{background:var(--primary-light);color:var(--primary)}
+.notif-item.success{background:#dcfce7;color:#15803d}
+.tab-content{display:none;padding:1.75rem}
+.tab-content.active{display:block}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;margin-bottom:1.4rem}
+.stat-box{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.1rem;
+  display:flex;align-items:center;gap:.9rem;transition:transform .2s;box-shadow:0 1px 8px rgba(0,0,0,.04);
+}
+.stat-box:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-box-icon{
+  width:44px;height:44px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+}
+.stat-box-icon.blue{background:var(--primary-light)}
+.stat-box-icon.green{background:#dcfce7}
+.stat-box-icon.yellow{background:#fef9c3}
+.stat-box-icon.red{background:#fee2e2}
+.stat-box-icon.purple{background:#ede9fe}
+.stat-box-num{font-weight:800;font-size:1.3rem;color:var(--gray-900)}
+.stat-box-label{font-size:.74rem;color:var(--gray-500)}
+
+/* ── PENERIMA PROFILE ── */
+.penerima-profile{margin-bottom:1.4rem}
+.profile-card{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  border-radius:var(--rl);padding:1.5rem;display:flex;
+  align-items:center;gap:1.25rem;margin-bottom:.9rem;color:#fff;
+}
+.profile-avatar{font-size:2.75rem}
+.profile-info h2{font-size:1.2rem;color:#fff}
+.profile-meta{display:flex;gap:.85rem;margin-top:.35rem;font-size:.82rem;color:rgba(255,255,255,.8);flex-wrap:wrap}
+.profile-details-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}
+.pd-item{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);
+  padding:1rem;display:flex;align-items:center;gap:.7rem;
+}
+.pd-icon{font-size:1.3rem}
+.pd-label{font-size:.72rem;color:var(--gray-500)}
+.pd-value{font-weight:700;font-size:.88rem;color:var(--gray-900)}
+.quick-info{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);
+  padding:1.1rem 1.4rem;display:flex;align-items:center;
+}
+.qi-item{flex:1;padding:0 1.1rem}
+.qi-divider{width:1px;height:36px;background:var(--gray-200)}
+.qi-label{font-size:.72rem;color:var(--gray-500);margin-bottom:.15rem}
+.qi-value{font-weight:700;font-size:.9rem;color:var(--gray-900)}
+
+/* ── STATUS CARDS ── */
+.status-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+.status-card{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.4rem;
+  border-top:4px solid var(--gray-300);
+}
+.status-card.approved{border-top-color:#16a34a}
+.status-card.held{border-top-color:#d97706}
+.status-card.needs-fix{border-top-color:#ea580c}
+.status-card.rejected{border-top-color:#dc2626}
+.sc-header{display:flex;align-items:center;gap:.7rem;margin-bottom:.65rem}
+.sc-status-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.sc-status-dot.green{background:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.2)}
+.sc-status-dot.yellow{background:#d97706;box-shadow:0 0 0 3px rgba(217,119,6,.2)}
+.sc-status-dot.orange{background:#ea580c;box-shadow:0 0 0 3px rgba(234,88,12,.2)}
+.sc-status-dot.red{background:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.2)}
+.sc-header h3{flex:1;font-size:.9rem}
+.sc-count{font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--gray-900)}
+.status-card>p{font-size:.8rem;color:var(--gray-500);margin-bottom:.9rem}
+.sc-table{font-size:.78rem}
+.sc-row{display:grid;grid-template-columns:2fr 2fr 1fr;padding:.38rem 0;border-bottom:1px solid var(--gray-100)}
+.sc-row.header{color:var(--gray-500);font-weight:600;font-size:.72rem}
+.sc-reasons{display:flex;flex-direction:column;gap:.55rem}
+.reason-item{display:flex;align-items:center;gap:.7rem;padding:.6rem;background:var(--gray-50);border-radius:8px;font-size:.8rem}
+.reason-icon{font-size:1.1rem}
+.reason-item strong{display:block;color:var(--gray-900)}
+.reason-count{font-size:.72rem;color:var(--primary);font-weight:700}
+
+/* ── TABLE ── */
+.table-card{background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);overflow:hidden}
+.table-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 1.4rem;border-bottom:1px solid var(--gray-200);
+}
+.table-header h3{font-size:.95rem;color:var(--gray-900)}
+.table-header p{font-size:.78rem;color:var(--gray-500);margin-top:.1rem}
+.table-actions{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap}
+.filter-select{
+  padding:.42rem .7rem;border:1px solid var(--gray-200);border-radius:8px;
+  font-family:var(--font);font-size:.8rem;color:var(--gray-700);cursor:pointer;background:#fff;
+}
+.btn-sm-primary{
+  padding:.42rem .85rem;background:var(--primary);color:#fff;border:none;
+  border-radius:8px;font-family:var(--font);font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s;
+}
+.btn-sm-primary:hover{background:var(--primary-dark)}
+.btn-sm-success{
+  padding:.42rem .85rem;background:#16a34a;color:#fff;border:none;
+  border-radius:8px;font-family:var(--font);font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s;
+}
+.btn-sm-danger{
+  padding:.42rem .85rem;background:var(--red);color:#fff;border:none;
+  border-radius:8px;font-family:var(--font);font-size:.8rem;font-weight:600;cursor:pointer;
+}
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{
+  background:var(--gray-50);padding:.7rem 1.1rem;text-align:left;
+  font-size:.74rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;
+  letter-spacing:.5px;border-bottom:1px solid var(--gray-200);
+}
+.data-table td{padding:.82rem 1.1rem;font-size:.85rem;border-bottom:1px solid var(--gray-100);color:var(--gray-700)}
+.data-table tr:hover td{background:var(--gray-50)}
+.badge-status{
+  display:inline-flex;align-items:center;gap:.25rem;padding:.27rem .65rem;
+  border-radius:100px;font-size:.74rem;font-weight:600;
+}
+.badge-status.success{background:#dcfce7;color:#15803d}
+.badge-status.pending{background:#fef9c3;color:#a16207}
+.badge-status.warning{background:#ffedd5;color:#c2410c}
+.badge-status.danger{background:#fee2e2;color:#b91c1c}
+.badge-status.info{background:var(--primary-light);color:var(--primary)}
+.table-footer{padding:.82rem 1.1rem;background:var(--gray-50);font-size:.8rem;color:var(--gray-500);border-top:1px solid var(--gray-200)}
+
+/* ── TIMELINE ── */
+.timeline-card{background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.75rem}
+.timeline-card h3{font-size:1.05rem;margin-bottom:.4rem}
+.timeline-flow{display:flex;flex-direction:column}
+.tl-step{display:flex;gap:1.4rem;position:relative;padding-bottom:1.75rem}
+.tl-step:last-child{padding-bottom:0}
+.tl-icon{
+  width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;border:3px solid var(--gray-200);background:var(--gray-50);
+  position:relative;z-index:1;
+}
+.tl-step.completed .tl-icon{background:#dcfce7;border-color:#16a34a}
+.tl-step.active .tl-icon{background:var(--primary-light);border-color:var(--primary);animation:ringPulse 2s infinite}
+.tl-step.pending .tl-icon{background:var(--gray-100);border-color:var(--gray-300)}
+.tl-connector{position:absolute;left:23px;top:48px;width:2px;height:calc(100% - 48px);background:var(--gray-200)}
+.tl-connector.done{background:#16a34a}
+.tl-connector.active{background:linear-gradient(#16a34a,var(--gray-200))}
+.tl-content{flex:1;padding-top:.4rem}
+.tl-content h4{font-size:.95rem;color:var(--gray-900);margin-bottom:.25rem}
+.tl-content p{font-size:.82rem;color:var(--gray-500);line-height:1.6;margin-bottom:.4rem}
+.tl-meta{font-size:.75rem;font-weight:600;color:var(--gray-500)}
+.tl-step.completed .tl-meta{color:#15803d}
+.tl-step.active .tl-meta{color:var(--primary)}
+.timeline-legend{display:flex;gap:1.4rem;margin-top:1.75rem;padding-top:1.4rem;border-top:1px solid var(--gray-200)}
+.tl-leg{font-size:.8rem;font-weight:600;color:var(--gray-500)}
+
+/* ── EXPORT ── */
+.export-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.export-card{background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.5rem;text-align:center}
+.export-icon{font-size:2.25rem;margin-bottom:.65rem}
+.export-card h3{font-size:.95rem;color:var(--gray-900);margin-bottom:.45rem}
+.export-card p{font-size:.8rem;color:var(--gray-500);line-height:1.6;margin-bottom:1.1rem}
+.export-options{text-align:left;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem}
+.export-options label{font-size:.8rem;color:var(--gray-700);display:flex;align-items:center;gap:.45rem;cursor:pointer}
+.btn-export{
+  width:100%;padding:.7rem;border:none;border-radius:10px;
+  font-family:var(--font);font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;
+}
+.btn-export.pdf{background:#fee2e2;color:var(--red)}.btn-export.pdf:hover{background:var(--red);color:#fff}
+.btn-export.excel{background:#dcfce7;color:var(--green)}.btn-export.excel:hover{background:var(--green);color:#fff}
+.btn-export.sync{background:var(--primary-light);color:var(--primary)}.btn-export.sync:hover{background:var(--primary);color:#fff}
+.sync-status-list{text-align:left;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem}
+.sync-item{display:flex;align-items:center;gap:.45rem;font-size:.8rem;padding:.38rem;border-radius:6px}
+.sync-item.done{color:var(--green);background:#dcfce7}.sync-item.pending{color:var(--yellow);background:#fef9c3}
+.export-notif{
+  margin-top:1.4rem;padding:.9rem 1.4rem;background:#dcfce7;border-radius:var(--r);
+  color:#15803d;font-weight:600;font-size:.88rem;animation:fadeInDown .3s ease;
+}
+.audit-filters{display:flex;gap:.65rem}
+
+/* ── FORM PENGAJUAN ── */
+.form-section-title{
+  font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:1rem;
+  padding-bottom:.75rem;border-bottom:2px solid var(--primary-light);
+  display:flex;align-items:center;gap:.5rem;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.form-full{grid-column:1/-1}
+.form-card{background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.5rem;margin-bottom:1.25rem}
+.form-info{
+  background:var(--primary-light);border:1px solid #bfdbfe;border-radius:8px;
+  padding:.75rem 1rem;font-size:.82rem;color:var(--primary);margin-bottom:1.25rem;
+}
+.form-warning{
+  background:#fffbeb;border:1px solid #fde68a;border-radius:8px;
+  padding:.75rem 1rem;font-size:.82rem;color:#92400e;margin-bottom:1.25rem;
+}
+.upload-zone{
+  border:2px dashed var(--gray-300);border-radius:var(--r);padding:2rem;
+  text-align:center;cursor:pointer;transition:all .2s;background:var(--gray-50);
+  margin-bottom:1rem;
+}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-zone-icon{font-size:2rem;margin-bottom:.5rem}
+.upload-zone h4{font-size:.9rem;color:var(--gray-700);margin-bottom:.25rem}
+.upload-zone p{font-size:.78rem;color:var(--gray-500)}
+.upload-list{display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.upload-item{
+  display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;
+  background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);font-size:.82rem;
+}
+.upload-item-icon{font-size:1.2rem}
+.upload-item-name{flex:1;color:var(--gray-700)}
+.upload-item-status{font-size:.75rem;padding:.22rem .6rem;border-radius:100px}
+.upload-item-status.done{background:#dcfce7;color:#15803d}
+.upload-item-status.required{background:#fee2e2;color:var(--red)}
+.upload-item-status.optional{background:#fef9c3;color:#a16207}
+.btn-submit{
+  background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;
+  border:none;border-radius:10px;padding:.85rem 2rem;font-family:var(--font);
+  font-size:.92rem;font-weight:700;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:.5rem;
+}
+.btn-submit:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(29,78,216,.3)}
+
+/* ── SKOR KELAYAKAN ── */
+.skor-card{
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  border-radius:var(--rl);padding:2rem;color:#fff;margin-bottom:1.25rem;
+  position:relative;overflow:hidden;
+}
+.skor-card::before{
+  content:'';position:absolute;top:-50px;right:-50px;width:200px;height:200px;
+  border-radius:50%;background:rgba(255,255,255,.05);
+}
+.skor-label{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:1px}
+.skor-value{font-family:var(--font-display);font-size:3.5rem;font-weight:900;color:#4ade80;line-height:1}
+.skor-desc{font-size:1rem;color:rgba(255,255,255,.85);margin:.4rem 0 1.25rem}
+.skor-bar-wrap{background:rgba(255,255,255,.15);border-radius:100px;height:10px;overflow:hidden}
+.skor-bar{
+  height:100%;background:linear-gradient(90deg,#4ade80,#22c55e);
+  border-radius:100px;transition:width 1.5s ease;
+  animation:barGrow2 1.5s ease .3s both;
+}
+@keyframes barGrow2{from{width:0!important}}
+.skor-breakdown{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-top:1.25rem}
+.skor-item{background:rgba(255,255,255,.08);border-radius:10px;padding:.85rem;text-align:center}
+.skor-item-val{font-size:1.2rem;font-weight:800;color:#fff}
+.skor-item-lbl{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.2rem}
+
+/* ── VERIFIKASI SEKOLAH ── */
+.verif-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.btn-sesuai{
+  padding:.35rem .75rem;background:#dcfce7;color:#15803d;border:none;
+  border-radius:6px;font-family:var(--font);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-sesuai:hover{background:#16a34a;color:#fff}
+.btn-perlu-fix{
+  padding:.35rem .75rem;background:#ffedd5;color:#c2410c;border:none;
+  border-radius:6px;font-family:var(--font);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-perlu-fix:hover{background:var(--orange);color:#fff}
+.btn-tidak-sesuai{
+  padding:.35rem .75rem;background:#fee2e2;color:var(--red);border:none;
+  border-radius:6px;font-family:var(--font);font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.btn-tidak-sesuai:hover{background:var(--red);color:#fff}
+.catatan-box{
+  background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;
+  padding:1rem;margin-top:.75rem;font-size:.82rem;
+}
+.catatan-box h4{font-size:.82rem;color:var(--gray-700);margin-bottom:.5rem}
+.catatan-box textarea{
+  width:100%;border:1px solid var(--gray-200);border-radius:6px;padding:.55rem .75rem;
+  font-family:var(--font);font-size:.82rem;resize:vertical;min-height:60px;
+  transition:border-color .2s;
+}
+.catatan-box textarea:focus{outline:none;border-color:var(--primary)}
+
+/* ── VALIDASI PEMERINTAH ── */
+.validasi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+.validasi-box{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.1rem;
+  text-align:center;border-top:3px solid var(--gray-300);transition:transform .2s;
+}
+.validasi-box:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.validasi-box.dtks{border-top-color:#16a34a}
+.validasi-box.dukcapil{border-top-color:var(--primary)}
+.validasi-box.analisis{border-top-color:var(--purple)}
+.validasi-box.penetapan{border-top-color:var(--gold)}
+.validasi-icon{font-size:1.75rem;margin-bottom:.5rem}
+.validasi-label{font-size:.75rem;color:var(--gray-500);margin-bottom:.3rem}
+.validasi-val{font-size:.92rem;font-weight:700;color:var(--gray-900)}
+.validasi-status{font-size:.72rem;margin-top:.3rem}
+.validasi-status.ok{color:#15803d}.validasi-status.process{color:var(--primary)}
+
+/* ── BANDING ── */
+.banding-form{background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);padding:1.5rem}
+.banding-info{
+  background:#fffbeb;border:1px solid #fde68a;border-radius:8px;
+  padding:.9rem 1rem;font-size:.83rem;color:#92400e;margin-bottom:1.25rem;
+  display:flex;gap:.75rem;align-items:flex-start;
+}
+.banding-status-list{display:flex;flex-direction:column;gap:.65rem;margin-top:1rem}
+.banding-status-item{
+  display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;
+  background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-200);
+}
+.bsi-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bsi-dot.done{background:#16a34a}.bsi-dot.active{background:var(--primary);animation:pulse 2s infinite}
+.bsi-dot.pending{background:var(--gray-300)}
+.bsi-title{font-size:.85rem;font-weight:600;color:var(--gray-900)}
+.bsi-desc{font-size:.75rem;color:var(--gray-500)}
+.bsi-date{font-size:.75rem;color:var(--gray-400);margin-left:auto}
+
+/* ── MEKANISME ── */
+.mekanisme-card{
+  background:linear-gradient(135deg,var(--primary-light),#fff);
+  border:1px solid #bfdbfe;border-radius:var(--rl);padding:2rem;margin-bottom:1.25rem;
+}
+.mekanisme-card h3{font-size:1.1rem;color:var(--primary-dark);margin-bottom:.75rem}
+.mekanisme-card p{font-size:.88rem;color:var(--gray-700);line-height:1.8}
+.mekanisme-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-top:1.5rem}
+.mstep{
+  background:#fff;border-radius:var(--r);border:1px solid var(--gray-200);
+  padding:1rem;text-align:center;position:relative;
+}
+.mstep::after{
+  content:'→';position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+  color:var(--gray-400);font-size:1rem;font-weight:700;
+}
+.mstep:last-child::after{display:none}
+.mstep-num{
+  width:28px;height:28px;background:var(--primary);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;
+  margin:0 auto .5rem;
+}
+.mstep-icon{font-size:1.4rem;margin-bottom:.35rem}
+.mstep-label{font-size:.75rem;color:var(--gray-700);font-weight:600;line-height:1.3}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes barGrow{from{width:0!important}}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(29,78,216,.2)}50%{box-shadow:0 0 0 10px rgba(29,78,216,0)}}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:9999;
+  background:var(--gray-900);color:#fff;padding:.9rem 1.4rem;
+  border-radius:12px;font-size:.87rem;font-weight:600;
+  box-shadow:0 8px 30px rgba(0,0,0,.25);display:none;
+  animation:fadeInUp .35s ease;max-width:340px;
+}
+.toast.show{display:flex;align-items:center;gap:.6rem}
+.toast.success{background:#15803d}.toast.error{background:var(--red)}.toast.info{background:var(--primary)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero{flex-direction:column;text-align:center}
+  .hero-visual{padding:2.5rem 0 0;max-width:100%}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .profile-details-grid{grid-template-columns:repeat(2,1fr)}
+  .status-grid{grid-template-columns:1fr}
+  .export-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-grid-3{grid-template-columns:1fr}
+  .validasi-grid{grid-template-columns:repeat(2,1fr)}
+  .skor-breakdown{grid-template-columns:repeat(2,1fr)}
+  .mekanisme-steps{grid-template-columns:1fr}
+  .mstep::after{display:none}
+}
+@media(max-width:768px){
+  .login-layout{grid-template-columns:1fr}.login-left{display:none}
+  .dashboard-layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .hero-buttons{justify-content:center}
+  .hero-trust{justify-content:center}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .nav-links{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .nav-author .nav-author-name,.nav-author .nav-author-univ{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== TOAST NOTIF ==================== -->
+<div id="toast" class="toast"><span id="toast-icon">✅</span><span id="toast-msg">Berhasil</span></div>
+
+<!-- ==================== HALAMAN LANDING ==================== -->
+<div id="page-landing" class="page active">
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-logo" onclick="showPage('landing')">
+      <div class="logo-icon">🏛️</div>
+      <div><div class="logo-text">SIPANDA</div><div class="logo-sub">Sistem Bantuan Daerah</div></div>
+    </div>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('landing')">Beranda</a>
+      <a href="#" onclick="scrollTo2('program')">Program</a>
+      <a href="#" onclick="scrollTo2('statistik')">Statistik</a>
+      <a href="#" onclick="scrollTo2('manfaat')">Manfaat</a>
+      <a href="#" onclick="showPage('login')">Login</a>
+    </div>
+    <div class="nav-author">
+      <span>👨‍💻</span>
+      <div><div class="nav-author-name">Muhammad Setio Budi</div><div class="nav-author-univ">Univ. Mayjen Sungkono</div></div>
+    </div>
+    <button class="btn-nav-cek" onclick="showPage('cek-status')">🔍 Cek Status</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-shape shape1"></div>
+    <div class="hero-shape shape2"></div>
+    <div class="dots-grid"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span>Sistem Resmi Pemerintah Daerah</div>
+    <div class="hero-author-badge">✍️ Dikembangkan oleh <strong>Muhammad Setio Budi</strong> — Universitas Mayjen Sungkono</div>
+    <h1 class="hero-title">Sistem Integrasi<br><span class="title-accent">Penerima Bantuan</span><br>Daerah</h1>
+    <p class="hero-desc">SIPANDA menggabungkan data sosial ekonomi, pendidikan, dan kependudukan dalam satu platform digital untuk memastikan transparansi, akuntabilitas, dan keadilan distribusi bantuan pendidikan.</p>
+    <div class="hero-buttons">
+      <button class="btn-primary" onclick="showPage('login')"><span>🏢</span> Login Instansi</button>
+      <button class="btn-secondary" onclick="showLoginRole('penerima')"><span>👤</span> Login Penerima</button>
+      <button class="btn-outline" onclick="showPage('cek-status')"><span>🔍</span> Cek Status Bantuan</button>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item"><span>✅</span> Data Terenkripsi</div>
+      <div class="trust-item"><span>🔒</span> Akses Terverifikasi</div>
+      <div class="trust-item"><span>📊</span> Real-time Update</div>
+      <div class="trust-item"><span>⚖️</span> Transparan & Adil</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="dashboard-preview">
+      <div class="preview-header">
+        <div class="preview-dots"><span></span><span></span><span></span></div>
+        <span>Dashboard SIPANDA</span>
+      </div>
+      <div class="preview-body">
+        <div class="preview-stat">
+          <div class="pstat-num">12.847</div>
+          <div class="pstat-label">Total Penerima</div>
+          <div class="pstat-bar"><div class="pstat-fill" style="width:78%"></div></div>
+        </div>
+        <div class="preview-stat">
+          <div class="pstat-num">Rp 4,2M</div>
+          <div class="pstat-label">Tersalurkan</div>
+          <div class="pstat-bar"><div class="pstat-fill green" style="width:65%"></div></div>
+        </div>
+        <div class="preview-badges">
+          <span class="pbadge green">✅ Disetujui: 9.204</span>
+          <span class="pbadge yellow">⚠️ Ditahan: 1.340</span>
+          <span class="pbadge red">❌ Ditolak: 412</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="statistik-section" id="statistik">
+  <div class="container">
+    <div class="section-label">📊 Data Terkini</div>
+    <h2 class="section-title">Statistik Penerima Bantuan</h2>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">👨‍👩‍👧‍👦</div><div class="stat-number counter" data-target="12847">0</div><div class="stat-label">Total Penerima</div><div class="stat-change">↑ 12% dari tahun lalu</div></div>
+      <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-number">Rp 4,2M</div><div class="stat-label">Dana Tersalurkan</div><div class="stat-change">↑ 8% dari tahun lalu</div></div>
+      <div class="stat-card"><div class="stat-icon">🏫</div><div class="stat-number counter" data-target="237">0</div><div class="stat-label">Instansi Terdaftar</div><div class="stat-change">↑ 5 instansi baru</div></div>
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-number">98,2%</div><div class="stat-label">Akurasi Data</div><div class="stat-change">↑ Meningkat</div></div>
+      <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-number counter" data-target="1892">0</div><div class="stat-label">Pengajuan Bulan Ini</div><div class="stat-change">↑ 23% dari bulan lalu</div></div>
+      <div class="stat-card"><div class="stat-icon">⚖️</div><div class="stat-number counter" data-target="47">0</div><div class="stat-label">Banding Diproses</div><div class="stat-change">↓ Menurun (baik)</div></div>
+      <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-number">3 Sis.</div><div class="stat-label">Integrasi Data</div><div class="stat-change">DTKS · Dukcapil · Dapodik</div></div>
+      <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-number">82%</div><div class="stat-label">Rata-rata Skor Kelayakan</div><div class="stat-change">↑ Tepat sasaran</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="program-section" id="program">
+  <div class="container">
+    <div class="section-label">🎯 Program Aktif</div>
+    <h2 class="section-title">Program Bantuan Daerah</h2>
+    <div class="program-grid">
+      <div class="program-card" style="border-top-color:#2563eb"><div class="program-icon">📚</div><div class="program-tag">Pendidikan</div><h3>Bantuan PIP</h3><p>Program Indonesia Pintar untuk siswa kurang mampu jenjang SD, SMP, SMA/SMK</p><div class="program-meta"><span>👥 5.204 Penerima</span><span>💰 Rp 450rb–1jt/tahun</span></div><div class="program-status open">🟢 Dibuka</div></div>
+      <div class="program-card" style="border-top-color:#16a34a"><div class="program-icon">🍚</div><div class="program-tag">Pangan</div><h3>Bantuan BPNT</h3><p>Bantuan Pangan Non Tunai untuk keluarga penerima manfaat program keluarga harapan</p><div class="program-meta"><span>👥 3.841 Penerima</span><span>💰 Rp 200rb/bulan</span></div><div class="program-status open">🟢 Dibuka</div></div>
+      <div class="program-card" style="border-top-color:#d97706"><div class="program-icon">🏠</div><div class="program-tag">Sosial</div><h3>PKH Daerah</h3><p>Program Keluarga Harapan untuk ibu hamil, balita, lansia, dan penyandang disabilitas</p><div class="program-meta"><span>👥 2.190 Penerima</span><span>💰 Rp 250rb–600rb/bulan</span></div><div class="program-status pending">🟡 Verifikasi</div></div>
+      <div class="program-card" style="border-top-color:#7c3aed"><div class="program-icon">💊</div><div class="program-tag">Kesehatan</div><h3>Bantuan JKN</h3><p>Jaminan Kesehatan Nasional bagi warga miskin dan tidak mampu di wilayah daerah</p><div class="program-meta"><span>👥 1.612 Penerima</span><span>💰 Gratis iuran</span></div><div class="program-status open">🟢 Dibuka</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="manfaat-section" id="manfaat">
+  <div class="container">
+    <div class="section-label">🚀 Inovasi Sistem</div>
+    <h2 class="section-title">Mekanisme Penentuan Penerima Bantuan SIPANDA</h2>
+    <p class="section-desc">SIPANDA menggabungkan data sosial ekonomi, data pendidikan, dan data kependudukan dalam satu platform digital. Penentuan penerima bantuan dilakukan melalui pengajuan mandiri, verifikasi sekolah, validasi pemerintah daerah, serta analisis kelayakan berbasis data.</p>
+    <div class="manfaat-grid">
+      <div class="manfaat-card"><div class="manfaat-icon">🎯</div><h4>Tepat Sasaran</h4><p>Meningkatkan ketepatan sasaran bantuan pendidikan melalui skor kelayakan otomatis berbasis data multi-sumber.</p></div>
+      <div class="manfaat-card" style="border-left-color:#16a34a"><div class="manfaat-icon">🔄</div><h4>Kurangi Duplikasi</h4><p>Mengurangi kesalahan dan duplikasi data penerima melalui integrasi DTKS, Dukcapil, dan Dapodik.</p></div>
+      <div class="manfaat-card" style="border-left-color:#7c3aed"><div class="manfaat-icon">📊</div><h4>Transparan</h4><p>Meningkatkan transparansi proses penyaluran bantuan dengan audit trail dan riwayat pencairan terbuka.</p></div>
+      <div class="manfaat-card" style="border-left-color:#d97706"><div class="manfaat-icon">💡</div><h4>Berbasis Data</h4><p>Mendukung pengambilan keputusan berbasis data analitik untuk efisiensi anggaran bantuan daerah.</p></div>
+      <div class="manfaat-card" style="border-left-color:#dc2626"><div class="manfaat-icon">📡</div><h4>Monitoring Mudah</h4><p>Mempermudah monitoring dan evaluasi program bantuan secara real-time oleh seluruh pemangku kepentingan.</p></div>
+      <div class="manfaat-card" style="border-left-color:#0ea5e9"><div class="manfaat-icon">⚖️</div><h4>Keadilan Prosedural</h4><p>Menjamin hak banding bagi penerima yang merasa penetapan tidak sesuai kondisi ekonomi sebenarnya.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">🏛️ SIPANDA</div>
+        <p>Sistem Integrasi Penerima Bantuan Daerah — Platform resmi pengelolaan bantuan sosial berbasis data terintegrasi.</p>
+      </div>
+      <div><h4>Layanan</h4><ul><li><a href="#">Cek Status Bantuan</a></li><li><a href="#">Pengajuan Banding</a></li><li><a href="#">Laporan Masalah</a></li></ul></div>
+      <div><h4>Informasi</h4><ul><li><a href="#">Syarat & Ketentuan</a></li><li><a href="#">Kebijakan Privasi</a></li><li><a href="#">Panduan Pengguna</a></li></ul></div>
+      <div><h4>Kontak</h4><p>📞 (0xxx) 123-456</p><p>📧 sipanda@pemda.go.id</p><p>🕒 Sen-Jum: 08.00–16.00</p></div>
+    </div>
+    <div class="footer-author-block">
+      <div class="footer-author-name">© 2025 Muhammad Setio Budi</div>
+      <div class="footer-author-univ">Universitas Mayjen Sungkono</div>
+      <div class="footer-author-tag">Prototype SIPANDA — Sistem Integrasi Penerima Bantuan Daerah</div>
+      <div class="footer-author-note">⚠️ Hak Cipta Dilindungi. Dilarang menyalin atau menggunakan tanpa izin pemilik.</div>
+    </div>
+    <div class="footer-bottom"><p class="footer-sim">Simulasi Sistem — Data bersifat fiktif untuk keperluan demonstrasi.</p></div>
+  </div>
+</footer>
+</div>
+
+<!-- ==================== HALAMAN LOGIN ==================== -->
+<div id="page-login" class="page">
+<div class="login-layout">
+  <div class="login-left">
+    <div class="login-brand" onclick="showPage('landing')" style="cursor:pointer">
+      <div class="brand-icon">🏛️</div>
+      <div><div class="brand-name">SIPANDA</div><div class="brand-sub">Sistem Bantuan Daerah</div></div>
+    </div>
+    <h1 class="login-title">Selamat Datang<br>di Sistem Resmi</h1>
+    <p class="login-desc">Platform digital terpadu untuk penyaluran bantuan sosial yang transparan dan akuntabel.</p>
+    <div class="login-features">
+      <div class="lf-item"><span>🔒</span> Keamanan Data Terjamin</div>
+      <div class="lf-item"><span>📱</span> Akses Multi-Perangkat</div>
+      <div class="lf-item"><span>🔔</span> Notifikasi Real-time</div>
+      <div class="lf-item"><span>📋</span> Pengajuan & Banding Online</div>
+    </div>
+    <div class="login-disclaimer">⚠️ <strong>SIMULASI SISTEM</strong> — Prototype demonstrasi. Data bersifat fiktif.</div>
+    <div class="login-author-credit">
+      <div class="lac-label">👨‍💻 Dikembangkan oleh</div>
+      <div class="lac-name">Muhammad Setio Budi</div>
+      <div class="lac-univ">Universitas Mayjen Sungkono</div>
+      <div class="lac-copy">© 2025 Hak Cipta Dilindungi</div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-role-tabs">
+        <button class="role-tab active" data-role="admin" onclick="switchRole('admin')">👤 Admin</button>
+        <button class="role-tab" data-role="sekolah" onclick="switchRole('sekolah')">🏫 Operator</button>
+        <button class="role-tab" data-role="penerima" onclick="switchRole('penerima')">👨‍👩‍👧 Penerima</button>
+      </div>
+      <div class="login-role-label">
+        <span id="role-icon">🏛️</span><span id="role-name">Login Admin Pemerintah</span>
+      </div>
+      <div class="form-group">
+        <label id="login-id-label">Username / NIP</label>
+        <div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="login-id" placeholder="Masukkan username atau NIP" value="admin"></div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="login-pass" placeholder="Masukkan password" value="1234">
+          <button class="toggle-pass" onclick="togglePass()">👁️</button>
+        </div>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="remember"><label for="remember">Ingat saya</label>
+        <a href="#" class="forgot-link">Lupa password?</a>
+      </div>
+      <button class="btn-login" onclick="doLogin()"><span>Masuk ke Sistem</span><span class="btn-arrow">→</span></button>
+      <div class="login-sim-info">
+        <p>🧪 <strong>Mode Simulasi:</strong></p>
+        <div class="sim-accounts">
+          <span onclick="fillDemo('admin','1234','admin')">🏛️ Admin: admin / 1234</span>
+          <span onclick="fillDemo('sekolah','1234','sekolah')">🏫 Operator: sekolah / 1234</span>
+          <span onclick="fillDemo('nik123','1234','penerima')">👤 Penerima: nik123 / 1234</span>
+        </div>
+      </div>
+      <button class="btn-back" onclick="showPage('landing')">← Kembali ke Beranda</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== CEK STATUS PUBLIK ==================== -->
+<div id="page-cek-status" class="page">
+<div class="cek-layout">
+  <button class="btn-back-top" onclick="showPage('landing')">← Kembali</button>
+  <div class="cek-card">
+    <div class="cek-header">
+      <div class="cek-icon">🔍</div>
+      <h2>Cek Status Bantuan</h2>
+      <p>Masukkan NIK atau NISN untuk melihat status bantuan Anda</p>
+    </div>
+    <div class="form-group">
+      <label>NIK / NISN</label>
+      <div class="input-wrap"><span class="input-icon">🪪</span><input type="text" id="cek-nik" placeholder="Contoh: 3201234567890001" value="3201234567890001"></div>
+    </div>
+    <div class="form-group">
+      <label>Nama Lengkap</label>
+      <div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="cek-nama" placeholder="Sesuai KTP / Kartu Keluarga" value="Budi Santoso"></div>
+    </div>
+    <button class="btn-cek" onclick="doCekStatus()">🔍 Cek Status Bantuan</button>
+    <div id="cek-result" class="cek-result" style="display:none">
+      <div class="result-header">
+        <div class="result-avatar">👤</div>
+        <div><h3>Budi Santoso</h3><p>NIK: 3201234567890001</p></div>
+        <div class="status-badge approved">🟢 Disetujui</div>
+      </div>
+      <div class="result-details">
+        <div class="detail-row"><span>Program</span><strong>Bantuan PIP 2025</strong></div>
+        <div class="detail-row"><span>Jumlah Bantuan</span><strong>Rp 450.000 / tahun</strong></div>
+        <div class="detail-row"><span>Pencairan Terakhir</span><strong>15 Januari 2025</strong></div>
+        <div class="detail-row"><span>Instansi</span><strong>SDN Merdeka 01</strong></div>
+        <div class="detail-row"><span>Skor Kelayakan</span><strong style="color:#16a34a">82% — Layak Prioritas</strong></div>
+      </div>
+      <div class="result-note success">✅ Data Anda telah terverifikasi dan bantuan sedang dalam proses pencairan.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div id="page-dashboard" class="page">
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sb-icon">🏛️</div>
+      <div><div class="sb-name">SIPANDA</div><div id="sb-role">Admin Pemerintah</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <!-- Menu Penerima -->
+      <div class="nav-group" id="menu-penerima" style="display:none">
+        <div class="nav-group-label">Pengajuan Bantuan</div>
+        <a class="nav-item" onclick="showTab('overview')"><span>📊</span> Dashboard</a>
+        <a class="nav-item" onclick="showTab('data-ekonomi')"><span>📋</span> Data Ekonomi Keluarga</a>
+        <a class="nav-item" onclick="showTab('upload-dok')"><span>📂</span> Upload Dokumen</a>
+        <a class="nav-item" onclick="showTab('status-verif')"><span>🔎</span> Status Verifikasi</a>
+        <div class="nav-group-label" style="margin-top:1rem">Riwayat</div>
+        <a class="nav-item" onclick="showTab('riwayat')"><span>📜</span> Riwayat Bantuan</a>
+        <a class="nav-item" onclick="showTab('banding')"><span>⚖️</span> Pengajuan Banding</a>
+      </div>
+      <!-- Menu Operator Sekolah -->
+      <div class="nav-group" id="menu-sekolah" style="display:none">
+        <div class="nav-group-label">Verifikasi Siswa</div>
+        <a class="nav-item" onclick="showTab('overview')"><span>📊</span> Dashboard</a>
+        <a class="nav-item" onclick="showTab('verif-sekolah')"><span>✅</span> Daftar Pengajuan</a>
+        <a class="nav-item" onclick="showTab('status')"><span>📋</span> Status Bantuan</a>
+        <a class="nav-item" onclick="showTab('riwayat')"><span>📜</span> Riwayat Pencairan</a>
+      </div>
+      <!-- Menu Admin Pemerintah -->
+      <div class="nav-group" id="menu-admin">
+        <div class="nav-group-label">Utama</div>
+        <a class="nav-item active" onclick="showTab('overview')"><span>📊</span> Dashboard</a>
+        <a class="nav-item" onclick="showTab('status')"><span>📋</span> Status Bantuan</a>
+        <a class="nav-item" onclick="showTab('riwayat')"><span>📜</span> Riwayat Pencairan</a>
+        <a class="nav-item" onclick="showTab('timeline')"><span>🗺️</span> Timeline Proses</a>
+        <div class="nav-group-label" style="margin-top:1rem">Validasi & Admin</div>
+        <a class="nav-item" onclick="showTab('validasi-pem')"><span>🏛️</span> Validasi Penerima</a>
+        <a class="nav-item" onclick="showTab('audit')"><span>🔍</span> Audit Trail</a>
+        <a class="nav-item" onclick="showTab('export')"><span>📤</span> Export Data</a>
+        <a class="nav-item" onclick="showTab('mekanisme')"><span>ℹ️</span> Mekanisme Sistem</a>
+      </div>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="user-avatar">A</div>
+      <div><div class="user-name" id="user-name">Admin Daerah</div><div class="user-role" id="user-role">Administrator</div></div>
+      <button class="logout-btn" onclick="doLogout()" title="Logout">🚪</button>
+    </div>
+    <div class="sidebar-dev-credit">
+      <div class="sdc-label">👨‍💻 Developer</div>
+      <div class="sdc-name">Muhammad Setio Budi</div>
+      <div class="sdc-univ">Univ. Mayjen Sungkono</div>
+      <div class="sdc-copy">© 2025</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="content-header">
+      <div>
+        <h2 id="page-title">Dashboard Utama</h2>
+        <p id="page-sub">Selamat datang, <span id="header-user">Admin</span></p>
+      </div>
+      <div class="header-actions">
+        <div class="header-dev-stamp">
+          <span>👨‍💻</span>
+          <div><div class="hds-name">Muhammad Setio Budi</div><div class="hds-univ">Univ. Mayjen Sungkono · © 2025</div></div>
+        </div>
+        <div class="notif-btn" onclick="toggleNotif()">🔔 <span class="notif-badge">3</span></div>
+        <div class="date-badge">📅 <span id="current-date"></span></div>
+      </div>
+    </div>
+
+    <!-- Notif Panel -->
+    <div id="notif-panel" class="notif-panel" style="display:none">
+      <h3>🔔 Notifikasi</h3>
+      <div class="notif-item warning">⚠️ 47 data penerima memerlukan verifikasi ulang</div>
+      <div class="notif-item info">ℹ️ Pencairan tahap II dijadwalkan 15 Maret 2025</div>
+      <div class="notif-item success">✅ Import data batch dari Dinas Pendidikan berhasil</div>
+    </div>
+
+    <!-- ====== TAB: OVERVIEW ====== -->
+    <div id="tab-overview" class="tab-content active">
+      <div id="admin-stats" class="stats-row">
+        <div class="stat-box"><div class="stat-box-icon blue">👥</div><div><div class="stat-box-num">12.847</div><div class="stat-box-label">Total Penerima</div></div></div>
+        <div class="stat-box"><div class="stat-box-icon green">✅</div><div><div class="stat-box-num">9.204</div><div class="stat-box-label">Terverifikasi</div></div></div>
+        <div class="stat-box"><div class="stat-box-icon yellow">⏳</div><div><div class="stat-box-num">1.340</div><div class="stat-box-label">Menunggu Verifikasi</div></div></div>
+        <div class="stat-box"><div class="stat-box-icon red">⚠️</div><div><div class="stat-box-num">412</div><div class="stat-box-label">Data Bermasalah</div></div></div>
+      </div>
+      <div id="penerima-stats" class="penerima-profile" style="display:none">
+        <div class="profile-card">
+          <div class="profile-avatar">👤</div>
+          <div class="profile-info">
+            <h2 id="p-nama">Budi Santoso</h2>
+            <div class="profile-meta"><span>🪪 NISN: <strong id="p-nisn">1234567890</strong></span><span>🏫 SDN Merdeka 01</span></div>
+          </div>
+          <div class="status-badge approved">🟢 Disetujui</div>
+        </div>
+        <div class="profile-details-grid">
+          <div class="pd-item"><div class="pd-icon">💰</div><div><div class="pd-label">Bantuan Diterima</div><div class="pd-value">Rp 450.000 / tahun</div></div></div>
+          <div class="pd-item"><div class="pd-icon">📅</div><div><div class="pd-label">Pencairan Terakhir</div><div class="pd-value">15 Januari 2025</div></div></div>
+          <div class="pd-item"><div class="pd-icon">🎯</div><div><div class="pd-label">Program</div><div class="pd-value">Bantuan PIP 2025</div></div></div>
+          <div class="pd-item"><div class="pd-icon">⭐</div><div><div class="pd-label">Skor Kelayakan</div><div class="pd-value" style="color:#16a34a">82% — Layak</div></div></div>
+        </div>
+      </div>
+      <div class="quick-info">
+        <div class="qi-item"><div class="qi-label">Periode</div><div class="qi-value">Tahun 2025</div></div>
+        <div class="qi-divider"></div>
+        <div class="qi-item"><div class="qi-label">Dana Tersalurkan</div><div class="qi-value" style="color:#16a34a">Rp 4,2 Miliar</div></div>
+        <div class="qi-divider"></div>
+        <div class="qi-item"><div class="qi-label">Instansi Aktif</div><div class="qi-value">237 Instansi</div></div>
+        <div class="qi-divider"></div>
+        <div class="qi-item"><div class="qi-label">Integrasi Data</div><div class="qi-value">DTKS · Dukcapil · Dapodik</div></div>
+        <div class="qi-divider"></div>
+        <div class="qi-item"><div class="qi-label">Update Terakhir</div><div class="qi-value">Hari ini, 08:30</div></div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: FORM DATA EKONOMI ====== -->
+    <div id="tab-data-ekonomi" class="tab-content">
+      <div class="form-card">
+        <div class="form-info">📌 <strong>Form Pengajuan Bantuan Pendidikan</strong> — Formulir ini digunakan untuk mengajukan bantuan pendidikan berdasarkan kondisi ekonomi keluarga. Data yang diinput harus sesuai dengan kondisi sebenarnya dan dapat dipertanggungjawabkan. Informasi yang diberikan akan diverifikasi oleh pihak sekolah dan pemerintah daerah.</div>
+        <div class="form-section-title">📋 Data Diri Siswa</div>
+        <div class="form-grid">
+          <div class="form-group"><label>Nama Lengkap Siswa</label><div class="input-wrap"><span class="input-icon">👤</span><input type="text" placeholder="Sesuai akta kelahiran" value="Budi Santoso"></div></div>
+          <div class="form-group"><label>NISN</label><div class="input-wrap"><span class="input-icon">🪪</span><input type="text" placeholder="10 digit NISN" value="1234567890"></div></div>
+          <div class="form-group"><label>NIK Siswa</label><div class="input-wrap"><span class="input-icon">🪪</span><input type="text" placeholder="16 digit NIK" value="3201234567890001"></div></div>
+          <div class="form-group"><label>Kelas / Jenjang</label><div class="input-wrap"><span class="input-icon">🏫</span><input type="text" placeholder="Contoh: Kelas 5 SD" value="Kelas 5 SD"></div></div>
+          <div class="form-group form-full"><label>Asal Sekolah</label><div class="input-wrap"><span class="input-icon">🏫</span><input type="text" placeholder="Nama sekolah lengkap" value="SDN Merdeka 01"></div></div>
+        </div>
+        <div class="form-section-title" style="margin-top:1.5rem">💼 Data Ekonomi Keluarga</div>
+        <div class="form-info">💡 Data ekonomi digunakan sebagai indikator dalam menentukan tingkat kelayakan penerima bantuan pendidikan.</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Penghasilan Orang Tua / Wali (per bulan)</label>
+            <div class="input-wrap">
+              <span class="input-icon">💰</span>
+              <select>
+                <option>-- Pilih Rentang Penghasilan --</option>
+                <option selected>Di bawah Rp 500.000</option>
+                <option>Rp 500.000 – Rp 1.000.000</option>
+                <option>Rp 1.000.000 – Rp 2.000.000</option>
+                <option>Rp 2.000.000 – Rp 3.500.000</option>
+                <option>Di atas Rp 3.500.000</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Jumlah Tanggungan Keluarga</label>
+            <div class="input-wrap">
+              <span class="input-icon">👨‍👩‍👧‍👦</span>
+              <select>
+                <option>-- Pilih Jumlah --</option>
+                <option>1 – 2 orang</option>
+                <option selected>3 – 4 orang</option>
+                <option>5 – 6 orang</option>
+                <option>Lebih dari 6 orang</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Pekerjaan Orang Tua / Wali</label>
+            <div class="input-wrap">
+              <span class="input-icon">💼</span>
+              <select>
+                <option>-- Pilih Pekerjaan --</option>
+                <option selected>Buruh harian lepas</option>
+                <option>Petani / Nelayan</option>
+                <option>Pedagang kecil</option>
+                <option>Karyawan swasta</option>
+                <option>PNS / TNI / Polri</option>
+                <option>Tidak bekerja / pengangguran</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Status Kepemilikan Rumah</label>
+            <div class="input-wrap">
+              <span class="input-icon">🏠</span>
+              <select>
+                <option>-- Pilih Status --</option>
+                <option selected>Kontrak / Sewa</option>
+                <option>Milik sendiri (belum lunas)</option>
+                <option>Milik sendiri (lunas)</option>
+                <option>Menumpang di keluarga</option>
+                <option>Rumah dinas</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-full">
+            <label>Kondisi Tempat Tinggal</label>
+            <div class="input-wrap">
+              <span class="input-icon">🏚️</span>
+              <select>
+                <option>-- Pilih Kondisi --</option>
+                <option>Sangat tidak layak (tanpa MCK, lantai tanah)</option>
+                <option selected>Tidak layak (dinding papan/bambu)</option>
+                <option>Cukup layak (semi permanen)</option>
+                <option>Layak (permanen)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-full">
+            <label>Keterangan Tambahan Kondisi Ekonomi</label>
+            <div class="input-wrap">
+              <span class="input-icon">📝</span>
+              <textarea placeholder="Jelaskan kondisi ekonomi keluarga secara singkat (opsional)...">Ayah bekerja sebagai buruh bangunan tidak tetap. Ibu tidak bekerja. Tinggal di rumah kontrakan bersama 4 anak.</textarea>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;margin-top:1rem">
+          <button class="btn-submit" onclick="submitForm('data-ekonomi')"><span>💾</span> Simpan & Lanjutkan ke Upload Dokumen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: UPLOAD DOKUMEN ====== -->
+    <div id="tab-upload-dok" class="tab-content">
+      <div class="form-card">
+        <div class="form-section-title">📂 Upload Dokumen Pendukung</div>
+        <div class="form-info">📋 Silakan unggah dokumen yang mendukung kondisi ekonomi keluarga Anda. Dokumen ini digunakan untuk proses verifikasi kelayakan penerima bantuan.</div>
+        <div class="form-warning">⚠️ Dokumen yang diunggah harus sesuai dengan kondisi sebenarnya. Data yang tidak valid dapat menyebabkan pengajuan bantuan ditolak atau diproses ulang.</div>
+
+        <div class="upload-list">
+          <div class="upload-item">
+            <div class="upload-item-icon">📄</div>
+            <div class="upload-item-name">
+              <strong>Surat Keterangan Tidak Mampu (SKTM)</strong>
+              <div style="font-size:.75rem;color:var(--gray-500)">Dari desa / kelurahan setempat</div>
+            </div>
+            <span class="upload-item-status optional">Opsional</span>
+            <button class="btn-sm-primary" onclick="simulasiUpload(this, 'SKTM')">📤 Upload</button>
+          </div>
+          <div class="upload-item">
+            <div class="upload-item-icon">📸</div>
+            <div class="upload-item-name">
+              <strong>Foto Kondisi Rumah Tampak Depan</strong>
+              <div style="font-size:.75rem;color:var(--gray-500)">Format JPG/PNG, maks 2MB</div>
+            </div>
+            <span class="upload-item-status required">Wajib</span>
+            <button class="btn-sm-primary" onclick="simulasiUpload(this, 'Foto Depan')">📤 Upload</button>
+          </div>
+          <div class="upload-item">
+            <div class="upload-item-icon">📸</div>
+            <div class="upload-item-name">
+              <strong>Foto Kondisi Dalam Rumah</strong>
+              <div style="font-size:.75rem;color:var(--gray-500)">Ruang utama / kamar tidur</div>
+            </div>
+            <span class="upload-item-status required">Wajib</span>
+            <button class="btn-sm-primary" onclick="simulasiUpload(this, 'Foto Dalam')">📤 Upload</button>
+          </div>
+          <div class="upload-item">
+            <div class="upload-item-icon">📄</div>
+            <div class="upload-item-name">
+              <strong>Kartu Keluarga (KK)</strong>
+              <div style="font-size:.75rem;color:var(--gray-500)">Scan atau foto jelas, format PDF/JPG</div>
+            </div>
+            <span class="upload-item-status required">Wajib</span>
+            <button class="btn-sm-primary" onclick="simulasiUpload(this, 'KK')">📤 Upload</button>
+          </div>
+          <div class="upload-item">
+            <div class="upload-item-icon">📎</div>
+            <div class="upload-item-name">
+              <strong>Dokumen Pendukung Lain</strong>
+              <div style="font-size:.75rem;color:var(--gray-500)">Surat keterangan penghasilan, dll</div>
+            </div>
+            <span class="upload-item-status optional">Opsional</span>
+            <button class="btn-sm-primary" onclick="simulasiUpload(this, 'Dok. Lain')">📤 Upload</button>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <button class="btn-submit" onclick="submitForm('upload')"><span>✅</span> Kirim Pengajuan Bantuan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: STATUS VERIFIKASI (PENERIMA) ====== -->
+    <div id="tab-status-verif" class="tab-content">
+      <div class="skor-card">
+        <div class="skor-label">Skor Kelayakan Otomatis</div>
+        <div class="skor-value">82%</div>
+        <div class="skor-desc">🏆 Layak Prioritas — Sangat disarankan untuk menerima bantuan</div>
+        <div class="skor-bar-wrap"><div class="skor-bar" style="width:82%"></div></div>
+        <div class="skor-breakdown">
+          <div class="skor-item"><div class="skor-item-val">95%</div><div class="skor-item-lbl">Ekonomi Keluarga</div></div>
+          <div class="skor-item"><div class="skor-item-val">88%</div><div class="skor-item-lbl">Kondisi Rumah</div></div>
+          <div class="skor-item"><div class="skor-item-val">75%</div><div class="skor-item-lbl">Data DTKS</div></div>
+          <div class="skor-item"><div class="skor-item-val">70%</div><div class="skor-item-lbl">Tanggungan</div></div>
+        </div>
+      </div>
+      <div class="timeline-card">
+        <h3>📊 Status Pengajuan Bantuan</h3>
+        <p style="color:var(--gray-500);font-size:.83rem;margin-bottom:1.5rem">Proses verifikasi dilakukan secara bertahap untuk memastikan bantuan tepat sasaran.</p>
+        <div class="timeline-flow">
+          <div class="tl-step completed"><div class="tl-icon">📝</div><div class="tl-content"><h4>Pengajuan Diterima Sistem</h4><p>Data dan dokumen Anda telah berhasil diterima sistem SIPANDA.</p><div class="tl-meta">✅ Selesai — 10 Januari 2025</div></div><div class="tl-connector done"></div></div>
+          <div class="tl-step completed"><div class="tl-icon">🏫</div><div class="tl-content"><h4>Verifikasi oleh Sekolah</h4><p>Sekolah melakukan verifikasi kondisi ekonomi berdasarkan data riil peserta didik.</p><div class="tl-meta">✅ Selesai — 13 Januari 2025</div></div><div class="tl-connector done"></div></div>
+          <div class="tl-step active"><div class="tl-icon">🏛️</div><div class="tl-content"><h4>Validasi Pemerintah Daerah</h4><p>Pemerintah melakukan validasi melalui integrasi DTKS, Dukcapil, dan analisis kelayakan.</p><div class="tl-meta">⏳ Sedang Berjalan — Estimasi 15 Januari 2025</div></div><div class="tl-connector active"></div></div>
+          <div class="tl-step pending"><div class="tl-icon">📋</div><div class="tl-content"><h4>Penetapan Penerima Bantuan</h4><p>Penetapan resmi daftar penerima bantuan berdasarkan skor kelayakan dan kuota.</p><div class="tl-meta">🕐 Menunggu</div></div><div class="tl-connector"></div></div>
+          <div class="tl-step pending"><div class="tl-icon">💰</div><div class="tl-content"><h4>Pencairan Dana</h4><p>Dana bantuan ditransfer ke rekening atau disalurkan melalui bank mitra.</p><div class="tl-meta">🕐 Menunggu — Estimasi 20 Januari 2025</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: STATUS BANTUAN (ADMIN) ====== -->
+    <div id="tab-status" class="tab-content">
+      <div class="status-grid">
+        <div class="status-card approved">
+          <div class="sc-header"><div class="sc-status-dot green"></div><h3>🟢 Disetujui</h3><span class="sc-count">9.204</span></div>
+          <p>Penerima telah diverifikasi dan bantuan siap dicairkan sesuai jadwal.</p>
+          <div class="sc-table">
+            <div class="sc-row header"><span>Nama</span><span>NISN/NIK</span><span>Skor</span></div>
+            <div class="sc-row"><span>Budi Santoso</span><span>1234567890</span><span style="color:#16a34a;font-weight:700">82%</span></div>
+            <div class="sc-row"><span>Siti Rahayu</span><span>0987654321</span><span style="color:#16a34a;font-weight:700">79%</span></div>
+            <div class="sc-row"><span>Ahmad Fauzi</span><span>1122334455</span><span style="color:#16a34a;font-weight:700">91%</span></div>
+          </div>
+        </div>
+        <div class="status-card held">
+          <div class="sc-header"><div class="sc-status-dot yellow"></div><h3>🟡 Ditahan</h3><span class="sc-count">1.340</span></div>
+          <p>Pencairan ditahan sementara karena masalah teknis atau administrasi.</p>
+          <div class="sc-reasons">
+            <div class="reason-item"><span class="reason-icon">🏦</span><div><strong>Rekening Tidak Aktif</strong><span class="reason-count">724 kasus</span></div></div>
+            <div class="reason-item"><span class="reason-icon">🔄</span><div><strong>Data Belum Sinkron</strong><span class="reason-count">616 kasus</span></div></div>
+          </div>
+        </div>
+        <div class="status-card needs-fix">
+          <div class="sc-header"><div class="sc-status-dot orange"></div><h3>🟠 Perlu Perbaikan</h3><span class="sc-count">891</span></div>
+          <p>Data penerima memerlukan koreksi sebelum proses dapat dilanjutkan.</p>
+          <div class="sc-reasons">
+            <div class="reason-item"><span class="reason-icon">🪪</span><div><strong>NIK Tidak Sesuai</strong><span class="reason-count">534 kasus</span></div></div>
+            <div class="reason-item"><span class="reason-icon">📋</span><div><strong>Dokumen Tidak Lengkap</strong><span class="reason-count">357 kasus</span></div></div>
+          </div>
+        </div>
+        <div class="status-card rejected">
+          <div class="sc-header"><div class="sc-status-dot red"></div><h3>🔴 Ditolak</h3><span class="sc-count">412</span></div>
+          <p>Tidak memenuhi syarat atau terbukti menerima bantuan ganda.</p>
+          <div class="sc-reasons">
+            <div class="reason-item"><span class="reason-icon">🚫</span><div><strong>Tidak Memenuhi Syarat</strong><span class="reason-count">298 kasus</span></div></div>
+            <div class="reason-item"><span class="reason-icon">⚠️</span><div><strong>Data Duplikat</strong><span class="reason-count">114 kasus</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: RIWAYAT PENCAIRAN ====== -->
+    <div id="tab-riwayat" class="tab-content">
+      <div class="table-card">
+        <div class="table-header">
+          <h3>📜 Riwayat Pencairan Dana</h3>
+          <div class="table-actions">
+            <select class="filter-select"><option>Semua Tahun</option><option>2025</option><option>2024</option><option>2023</option></select>
+            <button class="btn-sm-primary" onclick="showTab('export')">📤 Export</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Tahun</th><th>Tahap</th><th>Tanggal</th><th>Jumlah</th><th>Penerima</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>2025</td><td>Tahap I</td><td>15 Jan 2025</td><td><strong>Rp 450.000</strong></td><td>9.204 orang</td><td><span class="badge-status success">✅ Cair</span></td></tr>
+            <tr><td>2025</td><td>Tahap II</td><td>15 Mar 2025</td><td><strong>Rp 450.000</strong></td><td>8.940 orang</td><td><span class="badge-status pending">⏳ Proses</span></td></tr>
+            <tr><td>2024</td><td>Tahap III</td><td>20 Des 2024</td><td><strong>Rp 450.000</strong></td><td>11.203 orang</td><td><span class="badge-status success">✅ Cair</span></td></tr>
+            <tr><td>2024</td><td>Tahap II</td><td>15 Sep 2024</td><td><strong>Rp 450.000</strong></td><td>11.105 orang</td><td><span class="badge-status success">✅ Cair</span></td></tr>
+            <tr><td>2024</td><td>Tahap I</td><td>10 Mar 2024</td><td><strong>Rp 450.000</strong></td><td>10.887 orang</td><td><span class="badge-status success">✅ Cair</span></td></tr>
+            <tr><td>2023</td><td>Tahap III</td><td>22 Des 2023</td><td><strong>Rp 400.000</strong></td><td>10.340 orang</td><td><span class="badge-status success">✅ Cair</span></td></tr>
+          </tbody>
+        </table>
+        <div class="table-footer">Total dana tersalurkan: <strong>Rp 4,2 Miliar</strong> | 6 periode pencairan</div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: TIMELINE ====== -->
+    <div id="tab-timeline" class="tab-content">
+      <div class="timeline-card">
+        <h3>🗺️ Alur Proses Bantuan</h3>
+        <p style="color:var(--gray-500);font-size:.83rem;margin-bottom:1.75rem">Setiap pengajuan bantuan melalui tahapan berikut ini</p>
+        <div class="timeline-flow">
+          <div class="tl-step completed"><div class="tl-icon">📝</div><div class="tl-content"><h4>Pengajuan</h4><p>Data penerima diajukan oleh instansi atau secara mandiri oleh siswa/penerima ke sistem SIPANDA.</p><div class="tl-meta">✅ Selesai • 3–5 hari kerja</div></div><div class="tl-connector done"></div></div>
+          <div class="tl-step completed"><div class="tl-icon">🏫</div><div class="tl-content"><h4>Verifikasi Sekolah</h4><p>Sekolah memverifikasi kondisi ekonomi dan dokumen pendukung siswa berdasarkan kondisi riil.</p><div class="tl-meta">✅ Selesai • 5–7 hari kerja</div></div><div class="tl-connector done"></div></div>
+          <div class="tl-step active"><div class="tl-icon">🔍</div><div class="tl-content"><h4>Validasi Pemerintah Daerah</h4><p>Pengecekan NIK, NISN, integrasi DTKS/Dukcapil, dan analisis skor kelayakan otomatis.</p><div class="tl-meta">⏳ Sedang Berjalan • 2–3 hari kerja</div></div><div class="tl-connector active"></div></div>
+          <div class="tl-step pending"><div class="tl-icon">✅</div><div class="tl-content"><h4>Penetapan Penerima</h4><p>Pejabat berwenang menyetujui daftar penerima berdasarkan skor kelayakan dan kuota anggaran.</p><div class="tl-meta">🕐 Menunggu • Estimasi 2 hari</div></div><div class="tl-connector"></div></div>
+          <div class="tl-step pending"><div class="tl-icon">💰</div><div class="tl-content"><h4>Pencairan</h4><p>Dana ditransfer ke rekening penerima atau disalurkan melalui bank mitra resmi pemerintah.</p><div class="tl-meta">🕐 Menunggu • Estimasi 5–7 hari</div></div></div>
+        </div>
+        <div class="timeline-legend">
+          <span class="tl-leg">✅ Selesai</span>
+          <span class="tl-leg" style="color:var(--primary)">⏳ Berjalan</span>
+          <span class="tl-leg">🕐 Menunggu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: VERIFIKASI SEKOLAH ====== -->
+    <div id="tab-verif-sekolah" class="tab-content">
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>🏫 Verifikasi Data Siswa</h3><p>Sekolah melakukan verifikasi awal berdasarkan kondisi riil peserta didik di lingkungan sekolah.</p></div>
+          <div class="table-actions">
+            <select class="filter-select"><option>Semua Status</option><option>Belum Diverifikasi</option><option>Sesuai</option><option>Perlu Perbaikan</option></select>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Nama Siswa</th><th>NISN</th><th>Skor Kelayakan</th><th>Dok. Lengkap</th><th>Tindakan Verifikasi</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Budi Santoso</strong></td><td>1234567890</td>
+              <td><span style="color:#16a34a;font-weight:700">82% — Layak</span></td>
+              <td><span class="badge-status success">✅ Lengkap</span></td>
+              <td>
+                <div class="verif-actions">
+                  <button class="btn-sesuai" onclick="verifAction(this,'Sesuai','Budi Santoso')">✅ Sesuai</button>
+                  <button class="btn-perlu-fix" onclick="verifAction(this,'Perlu Fix','Budi Santoso')">⚠️ Perlu Perbaikan</button>
+                  <button class="btn-tidak-sesuai" onclick="verifAction(this,'Tidak Sesuai','Budi Santoso')">❌ Tidak Sesuai</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Siti Rahayu</strong></td><td>0987654321</td>
+              <td><span style="color:#16a34a;font-weight:700">79% — Layak</span></td>
+              <td><span class="badge-status success">✅ Lengkap</span></td>
+              <td>
+                <div class="verif-actions">
+                  <button class="btn-sesuai" onclick="verifAction(this,'Sesuai','Siti Rahayu')">✅ Sesuai</button>
+                  <button class="btn-perlu-fix" onclick="verifAction(this,'Perlu Fix','Siti Rahayu')">⚠️ Perlu Perbaikan</button>
+                  <button class="btn-tidak-sesuai" onclick="verifAction(this,'Tidak Sesuai','Siti Rahayu')">❌ Tidak Sesuai</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Eko Prasetyo</strong></td><td>5566778899</td>
+              <td><span style="color:#d97706;font-weight:700">54% — Perlu Review</span></td>
+              <td><span class="badge-status warning">⚠️ Kurang</span></td>
+              <td>
+                <div class="verif-actions">
+                  <button class="btn-sesuai" onclick="verifAction(this,'Sesuai','Eko Prasetyo')">✅ Sesuai</button>
+                  <button class="btn-perlu-fix" onclick="verifAction(this,'Perlu Fix','Eko Prasetyo')">⚠️ Perlu Perbaikan</button>
+                  <button class="btn-tidak-sesuai" onclick="verifAction(this,'Tidak Sesuai','Eko Prasetyo')">❌ Tidak Sesuai</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="catatan-box">
+          <h4>📝 Catatan Verifikasi Sekolah</h4>
+          <p style="font-size:.8rem;color:var(--gray-500);margin-bottom:.5rem">Catatan verifikasi sekolah digunakan sebagai rekomendasi bagi pemerintah daerah dalam proses penetapan penerima bantuan.</p>
+          <textarea placeholder="Tuliskan catatan verifikasi atau rekomendasi sekolah di sini...">Berdasarkan kunjungan rumah dan pengamatan langsung, kondisi ekonomi ketiga siswa di atas sesuai dengan data yang dilaporkan. Budi Santoso dan Siti Rahayu sangat layak menjadi prioritas penerima bantuan.</textarea>
+          <button class="btn-submit" style="margin-top:.75rem;padding:.65rem 1.4rem;font-size:.85rem" onclick="showToast('✅','Catatan verifikasi sekolah berhasil disimpan!')">💾 Simpan Catatan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: VALIDASI PEMERINTAH ====== -->
+    <div id="tab-validasi-pem" class="tab-content">
+      <div class="form-card" style="margin-bottom:1.25rem">
+        <div class="form-section-title">🏛️ Validasi dan Penetapan Penerima Bantuan</div>
+        <p style="font-size:.85rem;color:var(--gray-500);line-height:1.7;margin-bottom:1.25rem">Pemerintah daerah melakukan validasi data penerima bantuan melalui integrasi data kependudukan, data sosial ekonomi, serta hasil verifikasi sekolah untuk memastikan ketepatan sasaran bantuan pendidikan.</p>
+        <div class="validasi-grid">
+          <div class="validasi-box dtks"><div class="validasi-icon">🗄️</div><div class="validasi-label">Validasi DTKS</div><div class="validasi-val">9.204 data</div><div class="validasi-status ok">✅ Tersinkron</div></div>
+          <div class="validasi-box dukcapil"><div class="validasi-icon">🪪</div><div class="validasi-label">Validasi Dukcapil</div><div class="validasi-val">12.435 NIK</div><div class="validasi-status ok">✅ Terverifikasi</div></div>
+          <div class="validasi-box analisis"><div class="validasi-icon">📊</div><div class="validasi-label">Analisis Kelayakan</div><div class="validasi-val">Rata-rata 82%</div><div class="validasi-status process">⏳ Berjalan</div></div>
+          <div class="validasi-box penetapan"><div class="validasi-icon">📋</div><div class="validasi-label">Penetapan Penerima</div><div class="validasi-val">8.940 ditetapkan</div><div class="validasi-status process">⏳ Proses</div></div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>📋 Data Hasil Verifikasi Sekolah</h3><p>Untuk ditetapkan sebagai penerima bantuan oleh pemerintah daerah</p></div>
+          <div class="table-actions">
+            <button class="btn-sm-success" onclick="showToast('✅','9.204 penerima berhasil ditetapkan!')">✅ Tetapkan Semua Layak</button>
+            <button class="btn-sm-primary" onclick="showTab('export')">📤 Export SK</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Skor</th><th>DTKS</th><th>Dukcapil</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Budi Santoso</strong></td><td>1234567890</td><td>SDN Merdeka 01</td><td><strong style="color:#16a34a">82%</strong></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">Layak</span></td></tr>
+            <tr><td><strong>Siti Rahayu</strong></td><td>0987654321</td><td>SDN Merdeka 01</td><td><strong style="color:#16a34a">79%</strong></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">Layak</span></td></tr>
+            <tr><td><strong>Ahmad Fauzi</strong></td><td>1122334455</td><td>SMPN 2 Makmur</td><td><strong style="color:#16a34a">91%</strong></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status success">Layak Prioritas</span></td></tr>
+            <tr><td><strong>Eko Prasetyo</strong></td><td>5566778899</td><td>SDN Merdeka 01</td><td><strong style="color:#d97706">54%</strong></td><td><span class="badge-status warning">⚠️</span></td><td><span class="badge-status success">✅</span></td><td><span class="badge-status pending">Review</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====== TAB: BANDING ====== -->
+    <div id="tab-banding" class="tab-content">
+      <div class="banding-form">
+        <div class="form-section-title">⚖️ Pengajuan Keberatan / Banding</div>
+        <div class="banding-info">
+          <span>⚖️</span>
+          <div>Peserta didik dapat mengajukan keberatan apabila hasil penetapan bantuan tidak sesuai dengan kondisi ekonomi yang sebenarnya. Pengajuan banding akan ditinjau kembali oleh pihak terkait. Ini merupakan bentuk pemenuhan nilai keadilan prosedural dalam sistem SIPANDA.</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nama Siswa</label>
+            <div class="input-wrap"><span class="input-icon">👤</span><input type="text" value="Budi Santoso"></div>
+          </div>
+          <div class="form-group">
+            <label>NISN / NIK</label>
+            <div class="input-wrap"><span class="input-icon">🪪</span><input type="text" value="1234567890"></div>
+          </div>
+          <div class="form-group">
+            <label>Nomor SK Penolakan</label>
+            <div class="input-wrap"><span class="input-icon">📄</span><input type="text" placeholder="Nomor surat keputusan"></div>
+          </div>
+          <div class="form-group">
+            <label>Alasan Keberatan</label>
+            <div class="input-wrap">
+              <span class="input-icon">📋</span>
+              <select>
+                <option>-- Pilih Alasan --</option>
+                <option selected>Data ekonomi tidak sesuai kondisi sebenarnya</option>
+                <option>Dokumen tidak sempat diunggah tepat waktu</option>
+                <option>Terjadi kesalahan input data oleh operator</option>
+                <option>Perubahan kondisi ekonomi keluarga</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group form-full">
+            <label>Penjelasan Keberatan</label>
+            <div class="input-wrap">
+              <span class="input-icon">📝</span>
+              <textarea placeholder="Jelaskan alasan keberatan secara detail...">Kondisi ekonomi keluarga saya sebenarnya memenuhi syarat penerima bantuan. Ayah saya telah kehilangan pekerjaan sejak 3 bulan lalu dan saat ini tidak ada penghasilan tetap. Saya mohon agar pengajuan ini dapat ditinjau kembali.</textarea>
+            </div>
+          </div>
+        </div>
+        <button class="btn-submit" onclick="submitForm('banding')"><span>📨</span> Kirim Pengajuan Banding</button>
+        <div style="margin-top:2rem">
+          <div class="form-section-title">📊 Status Banding Aktif</div>
+          <div class="banding-status-list">
+            <div class="banding-status-item"><div class="bsi-dot done"></div><div><div class="bsi-title">Banding Diterima Sistem</div><div class="bsi-desc">Pengajuan banding telah masuk ke sistem SIPANDA</div></div><div class="bsi-date">12 Jan 2025</div></div>
+            <div class="banding-status-item"><div class="bsi-dot active"></div><div><div class="bsi-title">Tinjauan oleh Sekolah</div><div class="bsi-desc">Sekolah sedang melakukan peninjauan ulang data ekonomi</div></div><div class="bsi-date">Estimasi: 18 Jan 2025</div></div>
+            <div class="banding-status-item"><div class="bsi-dot pending"></div><div><div class="bsi-title">Validasi Pemerintah Daerah</div><div class="bsi-desc">Menunggu hasil tinjauan sekolah</div></div><div class="bsi-date">Estimasi: 22 Jan 2025</div></div>
+            <div class="banding-status-item"><div class="bsi-dot pending"></div><div><div class="bsi-title">Keputusan Final Banding</div><div class="bsi-desc">Diterima atau ditolak dengan alasan resmi</div></div><div class="bsi-date">Estimasi: 25 Jan 2025</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== TAB: AUDIT TRAIL ====== -->
+    <div id="tab-audit" class="tab-content">
+      <div class="table-card">
+        <div class="table-header">
+          <div><h3>🔍 Audit Trail</h3><p>Rekam jejak seluruh aktivitas sistem — fitur keamanan premium</p></div>
+          <div class="audit-filters">
+            <select class="filter-select"><option>Semua Aktivitas</option><option>Login</option><option>Perubahan Data</option><option>Persetujuan</option><option>Banding</option></select>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Waktu</th><th>Aktivitas</th><th>Petugas</th><th>Target</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>24 Feb 2025 09:45</td><td>Login sistem</td><td>Admin Pusat</td><td>—</td><td><span class="badge-status success">✅ Sukses</span></td></tr>
+            <tr><td>24 Feb 2025 09:52</td><td>Import data batch</td><td>Op. Sekolah 12</td><td>342 data penerima</td><td><span class="badge-status success">✅ Sukses</span></td></tr>
+            <tr><td>24 Feb 2025 10:15</td><td>Ubah status NIK</td><td>Admin Dinas</td><td>NIK 3201XXXXXX</td><td><span class="badge-status warning">⚠️ Diubah</span></td></tr>
+            <tr><td>24 Feb 2025 11:30</td><td>Persetujuan Tahap II</td><td>Kab. Admin</td><td>8.940 penerima</td><td><span class="badge-status success">✅ Disetujui</span></td></tr>
+            <tr><td>24 Feb 2025 13:00</td><td>Export data PDF</td><td>Admin Pusat</td><td>Laporan Tahap II 2025</td><td><span class="badge-status success">✅ Sukses</span></td></tr>
+            <tr><td>24 Feb 2025 14:22</td><td>Terima banding</td><td>Admin Dinas</td><td>Budi Santoso — NISN 1234567890</td><td><span class="badge-status info">📋 Diproses</span></td></tr>
+            <tr><td>23 Feb 2025 16:22</td><td>Hapus data duplikat</td><td>Admin Dinas</td><td>114 data duplikat</td><td><span class="badge-status danger">🗑️ Dihapus</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====== TAB: EXPORT ====== -->
+    <div id="tab-export" class="tab-content">
+      <div class="export-layout">
+        <div class="export-card">
+          <div class="export-icon">📄</div>
+          <h3>Export Laporan PDF</h3>
+          <p>Laporan lengkap penerima bantuan dengan format resmi dan tanda tangan digital</p>
+          <div class="export-options">
+            <label><input type="checkbox" checked> Data Penerima</label>
+            <label><input type="checkbox" checked> Status Verifikasi</label>
+            <label><input type="checkbox"> Riwayat Pencairan</label>
+            <label><input type="checkbox"> Audit Trail</label>
+          </div>
+          <button class="btn-export pdf" onclick="simulateExport('PDF')">📄 Download PDF</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">📊</div>
+          <h3>Export Data Excel</h3>
+          <p>Data tabular penerima bantuan dalam format spreadsheet untuk analisis lebih lanjut</p>
+          <div class="export-options">
+            <label><input type="checkbox" checked> Sheet Penerima</label>
+            <label><input type="checkbox" checked> Sheet Status</label>
+            <label><input type="checkbox" checked> Sheet Riwayat</label>
+            <label><input type="checkbox"> Skor Kelayakan</label>
+          </div>
+          <button class="btn-export excel" onclick="simulateExport('Excel')">📊 Download Excel</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">🔗</div>
+          <h3>Sinkronisasi Data</h3>
+          <p>Sinkronkan data dengan sistem pusat Dukcapil, DTKS, dan Dapodik secara real-time</p>
+          <div class="sync-status-list">
+            <div class="sync-item done"><span>✅</span> Dukcapil (NIK) — Tersinkron</div>
+            <div class="sync-item done"><span>✅</span> DTKS (PKH/BPNT) — Tersinkron</div>
+            <div class="sync-item pending"><span>⏳</span> Dapodik (NISN) — Proses</div>
+            <div class="sync-item done"><span>✅</span> Bank Mitra — Tersinkron</div>
+          </div>
+          <button class="btn-export sync" onclick="simulateExport('Sync')">🔄 Sinkronkan Sekarang</button>
+        </div>
+      </div>
+      <div id="export-notif" class="export-notif" style="display:none">
+        <span id="export-msg">✅ Export berhasil!</span>
+      </div>
+    </div>
+
+    <!-- ====== TAB: MEKANISME ====== -->
+    <div id="tab-mekanisme" class="tab-content">
+      <div class="mekanisme-card">
+        <h3>🏛️ Mekanisme Penentuan Penerima Bantuan SIPANDA</h3>
+        <p>SIPANDA merupakan sistem integrasi penerima bantuan daerah yang menggabungkan data sosial ekonomi, data pendidikan, dan data kependudukan dalam satu platform digital. Penentuan penerima bantuan dilakukan melalui proses pengajuan mandiri, verifikasi sekolah, validasi pemerintah daerah, serta analisis kelayakan berbasis data untuk memastikan transparansi, akuntabilitas, dan keadilan distribusi bantuan pendidikan.</p>
+        <div class="mekanisme-steps">
+          <div class="mstep"><div class="mstep-num">1</div><div class="mstep-icon">📝</div><div class="mstep-label">Pengajuan Mandiri</div></div>
+          <div class="mstep"><div class="mstep-num">2</div><div class="mstep-icon">🏫</div><div class="mstep-label">Verifikasi Sekolah</div></div>
+          <div class="mstep"><div class="mstep-num">3</div><div class="mstep-icon">🏛️</div><div class="mstep-label">Validasi Pemerintah</div></div>
+          <div class="mstep"><div class="mstep-num">4</div><div class="mstep-icon">📊</div><div class="mstep-label">Analisis Kelayakan</div></div>
+          <div class="mstep"><div class="mstep-num">5</div><div class="mstep-icon">💰</div><div class="mstep-label">Pencairan Dana</div></div>
+        </div>
+      </div>
+      <div class="manfaat-grid">
+        <div class="manfaat-card"><div class="manfaat-icon">🎯</div><h4>Tepat Sasaran</h4><p>Meningkatkan ketepatan sasaran bantuan pendidikan melalui skor kelayakan otomatis berbasis data multi-sumber.</p></div>
+        <div class="manfaat-card" style="border-left-color:#16a34a"><div class="manfaat-icon">🔄</div><h4>Kurangi Duplikasi</h4><p>Mengurangi kesalahan dan duplikasi data penerima melalui integrasi DTKS, Dukcapil, dan Dapodik.</p></div>
+        <div class="manfaat-card" style="border-left-color:#7c3aed"><div class="manfaat-icon">📊</div><h4>Transparansi</h4><p>Meningkatkan transparansi proses penyaluran bantuan dengan audit trail dan riwayat pencairan terbuka.</p></div>
+        <div class="manfaat-card" style="border-left-color:#d97706"><div class="manfaat-icon">💡</div><h4>Berbasis Data</h4><p>Mendukung pengambilan keputusan berbasis data analitik untuk efisiensi anggaran bantuan daerah.</p></div>
+        <div class="manfaat-card" style="border-left-color:#dc2626"><div class="manfaat-icon">📡</div><h4>Monitoring Mudah</h4><p>Mempermudah monitoring dan evaluasi program bantuan secara real-time.</p></div>
+        <div class="manfaat-card" style="border-left-color:#0ea5e9"><div class="manfaat-icon">⚖️</div><h4>Keadilan Prosedural</h4><p>Menjamin hak banding bagi penerima yang merasa penetapan tidak sesuai kondisi ekonomi sebenarnya.</p></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// ==================== STATE ====================
+let currentRole='admin', currentUser=null;
+
+// ==================== PAGE NAV ====================
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo(0,0);
+}
+function scrollTo2(id){
+  const el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+// ==================== LOGIN ====================
+function switchRole(role){
+  currentRole=role;
+  document.querySelectorAll('.role-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector('[data-role="'+role+'"]').classList.add('active');
+  const map={
+    admin:{icon:'🏛️',name:'Login Admin Pemerintah',idLabel:'Username / NIP'},
+    sekolah:{icon:'🏫',name:'Login Operator Sekolah',idLabel:'Username / NUPTK'},
+    penerima:{icon:'👨‍👩‍👧',name:'Login Penerima Bantuan',idLabel:'NIK / NISN'},
+  };
+  const l=map[role];
+  document.getElementById('role-icon').textContent=l.icon;
+  document.getElementById('role-name').textContent=l.name;
+  document.getElementById('login-id-label').textContent=l.idLabel;
+}
+function showLoginRole(role){showPage('login');switchRole(role)}
+function fillDemo(id,pass,role){
+  document.getElementById('login-id').value=id;
+  document.getElementById('login-pass').value=pass;
+  switchRole(role);
+}
+function togglePass(){
+  const i=document.getElementById('login-pass');
+  i.type=i.type==='password'?'text':'password';
+}
+function doLogin(){
+  const id=document.getElementById('login-id').value.trim();
+  const pass=document.getElementById('login-pass').value.trim();
+  if(!id||!pass){showToast('❌','Harap isi username dan password!','error');return}
+  const users={
+    admin:{name:'Admin Pusat',role:'admin',display:'Admin Pemerintah',avatar:'A',subRole:'Administrator'},
+    sekolah:{name:'Op. SDN Merdeka',role:'sekolah',display:'Operator Sekolah',avatar:'S',subRole:'Operator'},
+    penerima:{name:'Budi Santoso',role:'penerima',display:'Penerima Bantuan',avatar:'B',subRole:'Penerima'},
+    nik123:{name:'Budi Santoso',role:'penerima',display:'Penerima Bantuan',avatar:'B',subRole:'Penerima'},
+  };
+  const user=users[id];
+  if(!user||pass!=='1234'){showToast('❌','Username atau password salah!','error');return}
+  currentUser=user;
+  loadDashboard(user);
+  showPage('dashboard');
+  showTab('overview');
+  showToast('✅','Selamat datang, '+user.name+'!','success');
+}
+function loadDashboard(user){
+  document.getElementById('sb-role').textContent=user.display;
+  document.getElementById('user-name').textContent=user.name;
+  document.getElementById('user-role').textContent=user.subRole;
+  document.getElementById('user-avatar').textContent=user.avatar;
+  document.getElementById('header-user').textContent=user.name;
+  // Show/hide menus
+  document.getElementById('menu-admin').style.display='none';
+  document.getElementById('menu-penerima').style.display='none';
+  document.getElementById('menu-sekolah').style.display='none';
+  if(user.role==='penerima'){
+    document.getElementById('menu-penerima').style.display='block';
+    document.getElementById('admin-stats').style.display='none';
+    document.getElementById('penerima-stats').style.display='block';
+    document.getElementById('p-nama').textContent=user.name;
+  } else if(user.role==='sekolah'){
+    document.getElementById('menu-sekolah').style.display='block';
+    document.getElementById('admin-stats').style.display='grid';
+    document.getElementById('penerima-stats').style.display='none';
+  } else {
+    document.getElementById('menu-admin').style.display='block';
+    document.getElementById('admin-stats').style.display='grid';
+    document.getElementById('penerima-stats').style.display='none';
+  }
+  const now=new Date();
+  document.getElementById('current-date').textContent=now.toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+}
+function doLogout(){
+  if(confirm('Yakin ingin keluar dari sistem?')){currentUser=null;showPage('landing');}
+}
+
+// ==================== TABS ====================
+function showTab(t){
+  document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const tab=document.getElementById('tab-'+t);
+  if(tab) tab.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes("'"+t+"'")){n.classList.add('active')}
+  });
+  const titles={
+    'overview':['Dashboard Utama','Ringkasan data dan statistik sistem'],
+    'data-ekonomi':['Form Data Ekonomi Keluarga','Isi data kondisi ekonomi untuk pengajuan bantuan'],
+    'upload-dok':['Upload Dokumen Pendukung','Unggah dokumen verifikasi kelayakan'],
+    'status-verif':['Status Verifikasi Pengajuan','Pantau proses dan skor kelayakan'],
+    'status':['Status Bantuan','Status verifikasi seluruh penerima bantuan'],
+    'riwayat':['Riwayat Pencairan','Rekam jejak pencairan dana bantuan'],
+    'timeline':['Timeline Proses','Alur dan tahapan proses bantuan'],
+    'verif-sekolah':['Verifikasi Data Siswa','Validasi dokumen dan rekomendasi sekolah'],
+    'validasi-pem':['Validasi & Penetapan Penerima','Validasi DTKS, Dukcapil, dan analisis kelayakan'],
+    'banding':['Pengajuan Keberatan / Banding','Ajukan banding atas keputusan penetapan bantuan'],
+    'audit':['Audit Trail','Rekam jejak aktivitas sistem (Fitur Premium)'],
+    'export':['Export & Laporan','Unduh data dan laporan resmi'],
+    'mekanisme':['Mekanisme Sistem SIPANDA','Penjelasan alur dan manfaat sistem'],
+  };
+  if(titles[t]){
+    document.getElementById('page-title').textContent=titles[t][0];
+    document.getElementById('page-sub').textContent=titles[t][1];
+  }
+}
+
+// ==================== CEK STATUS ====================
+function doCekStatus(){
+  const nik=document.getElementById('cek-nik').value.trim();
+  const nama=document.getElementById('cek-nama').value.trim();
+  if(!nik||!nama){showToast('⚠️','Harap isi NIK/NISN dan Nama Lengkap','error');return}
+  const r=document.getElementById('cek-result');
+  r.style.display='block';
+  r.scrollIntoView({behavior:'smooth'});
+}
+
+// ==================== NOTIF ====================
+function toggleNotif(){
+  const p=document.getElementById('notif-panel');
+  p.style.display=p.style.display==='none'?'block':'none';
+}
+
+// ==================== EXPORT ====================
+function simulateExport(type){
+  const msgs={
+    'PDF':'📄 File PDF berhasil dibuat! Laporan Bantuan 2025 — 23 halaman. (Simulasi)',
+    'Excel':'📊 File Excel berhasil dibuat! Data_Penerima_2025.xlsx — 12.847 baris. (Simulasi)',
+    'Sync':'🔄 Sinkronisasi berhasil! Semua data tersinkron dengan sistem pusat. (Simulasi)',
+  };
+  const n=document.getElementById('export-notif');
+  n.style.display='block';
+  document.getElementById('export-msg').textContent='✅ '+msgs[type];
+  setTimeout(()=>{n.style.display='none'},4000);
+  showToast('✅',msgs[type],'success');
+}
+
+// ==================== FORM SUBMIT ====================
+function submitForm(type){
+  const msgs={
+    'data-ekonomi':'✅ Data ekonomi berhasil disimpan! Lanjutkan upload dokumen.',
+    'upload':'✅ Pengajuan bantuan berhasil dikirim! Nomor referensi: SIP-2025-08472',
+    'banding':'✅ Pengajuan banding berhasil dikirim! Akan diproses dalam 5–7 hari kerja.',
+  };
+  showToast('✅',msgs[type]||'Berhasil disimpan!','success');
+  if(type==='data-ekonomi') setTimeout(()=>showTab('upload-dok'),1500);
+  if(type==='upload') setTimeout(()=>showTab('status-verif'),1500);
+}
+
+// ==================== VERIFIKASI ====================
+function verifAction(btn,action,nama){
+  const row=btn.closest('tr');
+  const lastCell=row.querySelector('td:last-child');
+  const badges={'Sesuai':'<span class="badge-status success">✅ Sesuai</span>',
+    'Perlu Fix':'<span class="badge-status warning">⚠️ Perlu Perbaikan</span>',
+    'Tidak Sesuai':'<span class="badge-status danger">❌ Tidak Sesuai</span>'};
+  lastCell.innerHTML=badges[action]||'';
+  showToast('✅',nama+' — '+action+' berhasil dicatat','success');
+}
+
+// ==================== UPLOAD SIMULASI ====================
+function simulasiUpload(btn,nama){
+  btn.textContent='✅ Terupload';
+  btn.style.background='#16a34a';
+  btn.style.color='#fff';
+  btn.disabled=true;
+  showToast('✅',nama+' berhasil diunggah! (Simulasi)','success');
+}
+
+// ==================== TOAST ====================
+function showToast(icon,msg,type='info'){
+  const t=document.getElementById('toast');
+  const i=document.getElementById('toast-icon');
+  const m=document.getElementById('toast-msg');
+  t.className='toast show '+(type||'info');
+  i.textContent=icon; m.textContent=msg;
+  setTimeout(()=>{t.classList.remove('show')},3500);
+}
+
+// ==================== COUNTER ====================
+function animateCounters(){
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target=parseInt(el.dataset.target,10);
+    const start=performance.now();
+    const run=now=>{
+      const p=Math.min((now-start)/1500,1);
+      const e=1-Math.pow(1-p,3);
+      el.textContent=Math.floor(e*target).toLocaleString('id-ID');
+      if(p<1) requestAnimationFrame(run);
+    };
+    requestAnimationFrame(run);
+  });
+}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){animateCounters();obs.disconnect()}})},{threshold:.3});
+document.addEventListener('DOMContentLoaded',()=>{
+  const s=document.getElementById('statistik');
+  if(s) obs.observe(s);
+  const d=document.getElementById('current-date');
+  if(d) d.textContent=new Date().toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'long',year:'numeric'});
+});
+</script>
+</body>
+</html>
