@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIPANDA - Sistem Integrasi Penerima Bantuan Daerah</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ==================== HALAMAN LANDING ==================== -->
+<div id="page-landing" class="page active">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <div class="logo-icon">🏛️</div>
+        <div>
+          <div class="logo-text">SIPANDA</div>
+          <div class="logo-sub">Sistem Bantuan Daerah</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="showPage('landing')">Beranda</a>
+        <a href="#" onclick="scrollToSection('program')">Program</a>
+        <a href="#" onclick="scrollToSection('statistik')">Statistik</a>
+        <a href="#" onclick="showPage('login')">Login</a>
+      </div>
+      <button class="btn-nav-cek" onclick="showPage('cek-status')">Cek Status Bantuan</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-shape shape1"></div>
+      <div class="hero-shape shape2"></div>
+      <div class="hero-shape shape3"></div>
+      <div class="dots-grid"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Sistem Resmi Pemerintah Daerah
+      </div>
+      <h1 class="hero-title">
+        Sistem Integrasi<br>
+        <span class="title-accent">Penerima Bantuan</span><br>
+        Daerah
+      </h1>
+      <p class="hero-desc">
+        Platform digital terpadu untuk pengelolaan, pemantauan, dan penyaluran bantuan sosial daerah secara transparan, akuntabel, dan efisien.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="showPage('login')">
+          <span>🏢</span> Login Instansi
+        </button>
+        <button class="btn-secondary" onclick="showLoginRole('penerima')">
+          <span>👤</span> Login Penerima
+        </button>
+        <button class="btn-outline" onclick="showPage('cek-status')">
+          <span>🔍</span> Cek Status Bantuan
+        </button>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span>✅</span> Data Terenkripsi</div>
+        <div class="trust-item"><span>🔒</span> Akses Terverifikasi</div>
+        <div class="trust-item"><span>📊</span> Real-time Update</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="dashboard-preview">
+        <div class="preview-header">
+          <div class="preview-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <span>Dashboard SIPANDA</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-stat">
+            <div class="pstat-num">12.847</div>
+            <div class="pstat-label">Total Penerima</div>
+            <div class="pstat-bar"><div class="pstat-fill" style="width:78%"></div></div>
+          </div>
+          <div class="preview-stat">
+            <div class="pstat-num">Rp 4,2M</div>
+            <div class="pstat-label">Tersalurkan</div>
+            <div class="pstat-bar"><div class="pstat-fill green" style="width:65%"></div></div>
+          </div>
+          <div class="preview-badges">
+            <span class="pbadge green">✅ Disetujui: 9.204</span>
+            <span class="pbadge yellow">⚠️ Ditahan: 1.340</span>
+            <span class="pbadge red">❌ Ditolak: 412</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistik Section -->
+  <section class="statistik-section" id="statistik">
+    <div class="container">
+      <div class="section-label">📊 Data Terkini</div>
+      <h2 class="section-title">Statistik Penerima Bantuan</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👨‍👩‍👧‍👦</div>
+          <div class="stat-number counter" data-target="12847">0</div>
+          <div class="stat-label">Total Penerima</div>
+          <div class="stat-change up">↑ 12% dari tahun lalu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-number">Rp 4,2M</div>
+          <div class="stat-label">Dana Tersalurkan</div>
+          <div class="stat-change up">↑ 8% dari tahun lalu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏫</div>
+          <div class="stat-number counter" data-target="237">0</div>
+          <div class="stat-label">Instansi Terdaftar</div>
+          <div class="stat-change up">↑ 5 instansi baru</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-number">98,2%</div>
+          <div class="stat-label">Akurasi Data</div>
+          <div class="stat-change up">↑ Meningkat</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Program Bantuan Section -->
+  <section class="program-section" id="program">
+    <div class="container">
+      <div class="section-label">🎯 Program Aktif</div>
+      <h2 class="section-title">Program Bantuan Daerah</h2>
+      <div class="program-grid">
+        <div class="program-card" style="--accent:#2563eb">
+          <div class="program-icon">📚</div>
+          <div class="program-tag">Pendidikan</div>
+          <h3>Bantuan PIP</h3>
+          <p>Program Indonesia Pintar untuk siswa kurang mampu jenjang SD, SMP, SMA/SMK</p>
+          <div class="program-meta">
+            <span>👥 5.204 Penerima</span>
+            <span>💰 Rp 450rb–1jt/tahun</span>
+          </div>
+          <div class="program-status open">🟢 Dibuka</div>
+        </div>
+        <div class="program-card" style="--accent:#16a34a">
+          <div class="program-icon">🍚</div>
+          <div class="program-tag">Pangan</div>
+          <h3>Bantuan BPNT</h3>
+          <p>Bantuan Pangan Non Tunai untuk keluarga penerima manfaat program keluarga harapan</p>
+          <div class="program-meta">
+            <span>👥 3.841 Penerima</span>
+            <span>💰 Rp 200rb/bulan</span>
+          </div>
+          <div class="program-status open">🟢 Dibuka</div>
+        </div>
+        <div class="program-card" style="--accent:#d97706">
+          <div class="program-icon">🏠</div>
+          <div class="program-tag">Sosial</div>
+          <h3>PKH Daerah</h3>
+          <p>Program Keluarga Harapan untuk ibu hamil, balita, lansia, dan penyandang disabilitas</p>
+          <div class="program-meta">
+            <span>👥 2.190 Penerima</span>
+            <span>💰 Rp 250rb–600rb/bulan</span>
+          </div>
+          <div class="program-status pending">🟡 Verifikasi</div>
+        </div>
+        <div class="program-card" style="--accent:#7c3aed">
+          <div class="program-icon">💊</div>
+          <div class="program-tag">Kesehatan</div>
+          <h3>Bantuan JKN</h3>
+          <p>Jaminan Kesehatan Nasional bagi warga miskin dan tidak mampu di wilayah daerah</p>
+          <div class="program-meta">
+            <span>👥 1.612 Penerima</span>
+            <span>💰 Gratis iuran</span>
+          </div>
+          <div class="program-status open">🟢 Dibuka</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">🏛️ SIPANDA</div>
+          <p>Sistem Integrasi Penerima Bantuan Daerah — Platform resmi pengelolaan bantuan sosial.</p>
+        </div>
+        <div>
+          <h4>Layanan</h4>
+          <ul>
+            <li><a href="#">Cek Status Bantuan</a></li>
+            <li><a href="#">Pengajuan Banding</a></li>
+            <li><a href="#">Laporan Masalah</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Informasi</h4>
+          <ul>
+            <li><a href="#">Syarat & Ketentuan</a></li>
+            <li><a href="#">Kebijakan Privasi</a></li>
+            <li><a href="#">Panduan Pengguna</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Kontak</h4>
+          <p>📞 (0xxx) 123-456</p>
+          <p>📧 sipanda@pemda.go.id</p>
+          <p>🕒 Sen-Jum: 08.00–16.00</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 SIPANDA — Pemerintah Daerah. Simulasi Sistem.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== HALAMAN LOGIN ==================== -->
+<div id="page-login" class="page">
+  <div class="login-layout">
+    <div class="login-left">
+      <div class="login-brand" onclick="showPage('landing')" style="cursor:pointer">
+        <div class="brand-icon">🏛️</div>
+        <div>
+          <div class="brand-name">SIPANDA</div>
+          <div class="brand-sub">Sistem Bantuan Daerah</div>
+        </div>
+      </div>
+      <h1 class="login-title">Selamat Datang<br>di Sistem Resmi</h1>
+      <p class="login-desc">Platform digital terpadu untuk penyaluran bantuan sosial yang transparan dan akuntabel.</p>
+      <div class="login-features">
+        <div class="lf-item"><span>🔒</span> Keamanan Data Terjamin</div>
+        <div class="lf-item"><span>📱</span> Akses Multi-Perangkat</div>
+        <div class="lf-item"><span>🔔</span> Notifikasi Real-time</div>
+      </div>
+      <div class="login-disclaimer">
+        ⚠️ <strong>SIMULASI SISTEM</strong> — Ini adalah prototype demonstrasi. Data bersifat fiktif.
+      </div>
+    </div>
+
+    <div class="login-right">
+      <div class="login-card">
+        <div class="login-role-tabs">
+          <button class="role-tab active" data-role="admin" onclick="switchRole('admin')">
+            👤 Admin
+          </button>
+          <button class="role-tab" data-role="sekolah" onclick="switchRole('sekolah')">
+            🏫 Operator
+          </button>
+          <button class="role-tab" data-role="penerima" onclick="switchRole('penerima')">
+            👨‍👩‍👧 Penerima
+          </button>
+        </div>
+
+        <div class="login-form-content">
+          <div id="login-role-label" class="login-role-label">
+            <span id="role-icon">🏛️</span>
+            <span id="role-name">Login Admin Pemerintah</span>
+          </div>
+
+          <div class="form-group">
+            <label id="login-id-label">Username / NIP</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="login-id" placeholder="Masukkan username atau NIP" value="admin">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Password</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password" id="login-pass" placeholder="Masukkan password" value="1234">
+              <button class="toggle-pass" onclick="togglePass()">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" id="remember">
+            <label for="remember">Ingat saya</label>
+            <a href="#" class="forgot-link">Lupa password?</a>
+          </div>
+
+          <button class="btn-login" onclick="doLogin()">
+            <span>Masuk ke Sistem</span>
+            <span class="btn-arrow">→</span>
+          </button>
+
+          <div class="login-sim-info">
+            <p>🧪 <strong>Mode Simulasi:</strong> Gunakan akun berikut untuk demo</p>
+            <div class="sim-accounts">
+              <span onclick="fillDemo('admin','1234','admin')">Admin: admin / 1234</span>
+              <span onclick="fillDemo('sekolah','1234','sekolah')">Operator: sekolah / 1234</span>
+              <span onclick="fillDemo('penerima','1234','penerima')">Penerima: nik123 / 1234</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-back" onclick="showPage('landing')">← Kembali ke Beranda</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CEK STATUS PUBLIK ==================== -->
+<div id="page-cek-status" class="page">
+  <div class="cek-layout">
+    <button class="btn-back-top" onclick="showPage('landing')">← Kembali</button>
+    <div class="cek-card">
+      <div class="cek-header">
+        <div class="cek-icon">🔍</div>
+        <h2>Cek Status Bantuan</h2>
+        <p>Masukkan NIK atau NISN untuk melihat status bantuan Anda</p>
+      </div>
+      <div class="cek-form">
+        <div class="form-group">
+          <label>NIK / NISN</label>
+          <div class="input-wrap">
+            <span class="input-icon">🪪</span>
+            <input type="text" id="cek-nik" placeholder="Contoh: 3201234567890001" value="3201234567890001">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nama Lengkap</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="text" id="cek-nama" placeholder="Sesuai KTP / Kartu Keluarga" value="Budi Santoso">
+          </div>
+        </div>
+        <button class="btn-cek" onclick="doCekStatus()">
+          🔍 Cek Status Bantuan
+        </button>
+      </div>
+
+      <div id="cek-result" class="cek-result" style="display:none">
+        <div class="result-header">
+          <div class="result-avatar">👤</div>
+          <div>
+            <h3 id="result-nama">Budi Santoso</h3>
+            <p id="result-nik">NIK: 3201234567890001</p>
+          </div>
+          <div id="result-status-badge" class="status-badge approved">🟢 Disetujui</div>
+        </div>
+
+        <div class="result-details">
+          <div class="detail-row">
+            <span>Program</span>
+            <strong>Bantuan PIP 2025</strong>
+          </div>
+          <div class="detail-row">
+            <span>Jumlah Bantuan</span>
+            <strong>Rp 450.000 / tahun</strong>
+          </div>
+          <div class="detail-row">
+            <span>Pencairan Terakhir</span>
+            <strong>15 Januari 2025</strong>
+          </div>
+          <div class="detail-row">
+            <span>Instansi</span>
+            <strong>SDN Merdeka 01</strong>
+          </div>
+        </div>
+
+        <div class="result-note success">
+          ✅ Data Anda telah terverifikasi dan bantuan sedang dalam proses pencairan.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DASHBOARD ==================== -->
+<div id="page-dashboard" class="page">
+
+  <!-- Sidebar -->
+  <div class="dashboard-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sb-icon">🏛️</div>
+        <div>
+          <div class="sb-name">SIPANDA</div>
+          <div id="sb-role">Admin Pemerintah</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group">
+          <div class="nav-group-label">Utama</div>
+          <a href="#" class="nav-item active" onclick="showTab('overview')">
+            <span>📊</span> Dashboard
+          </a>
+          <a href="#" class="nav-item" onclick="showTab('status')">
+            <span>📋</span> Status Bantuan
+          </a>
+          <a href="#" class="nav-item" onclick="showTab('riwayat')">
+            <span>📜</span> Riwayat Pencairan
+          </a>
+          <a href="#" class="nav-item" onclick="showTab('timeline')">
+            <span>🗺️</span> Timeline Proses
+          </a>
+        </div>
+        <div class="nav-group" id="admin-nav">
+          <div class="nav-group-label">Administrasi</div>
+          <a href="#" class="nav-item" onclick="showTab('audit')">
+            <span>🔍</span> Audit Trail
+          </a>
+          <a href="#" class="nav-item" onclick="showTab('export')">
+            <span>📤</span> Export Data
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="user-name">Admin Daerah</div>
+          <div class="user-role" id="user-role">Administrator</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()" title="Logout">🚪</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Header Bar -->
+      <div class="content-header">
+        <div>
+          <h2 id="page-title">Dashboard Utama</h2>
+          <p id="page-sub">Selamat datang, <span id="header-user">Admin</span></p>
+        </div>
+        <div class="header-actions">
+          <div class="notif-btn" onclick="toggleNotif()">
+            🔔 <span class="notif-badge">3</span>
+          </div>
+          <div class="date-badge">📅 <span id="current-date"></span></div>
+        </div>
+      </div>
+
+      <!-- NOTIFIKASI -->
+      <div id="notif-panel" class="notif-panel" style="display:none">
+        <h3>🔔 Notifikasi</h3>
+        <div class="notif-item warning">⚠️ 47 data penerima memerlukan verifikasi ulang</div>
+        <div class="notif-item info">ℹ️ Pencairan tahap II dijadwalkan 15 Maret 2025</div>
+        <div class="notif-item success">✅ Import data batch dari Dinas Pendidikan berhasil</div>
+      </div>
+
+      <!-- ====== TAB: OVERVIEW ====== -->
+      <div id="tab-overview" class="tab-content active">
+
+        <!-- Stats Row - Admin -->
+        <div id="admin-stats" class="stats-row">
+          <div class="stat-box">
+            <div class="stat-box-icon blue">👥</div>
+            <div>
+              <div class="stat-box-num">12.847</div>
+              <div class="stat-box-label">Total Penerima</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-icon green">✅</div>
+            <div>
+              <div class="stat-box-num">9.204</div>
+              <div class="stat-box-label">Terverifikasi</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-icon yellow">⏳</div>
+            <div>
+              <div class="stat-box-num">1.340</div>
+              <div class="stat-box-label">Menunggu Verifikasi</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-icon red">⚠️</div>
+            <div>
+              <div class="stat-box-num">412</div>
+              <div class="stat-box-label">Data Bermasalah</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats - Penerima -->
+        <div id="penerima-stats" class="penerima-profile" style="display:none">
+          <div class="profile-card">
+            <div class="profile-avatar">👤</div>
+            <div class="profile-info">
+              <h2 id="p-nama">Budi Santoso</h2>
+              <div class="profile-meta">
+                <span>🪪 NISN: <strong id="p-nisn">1234567890</strong></span>
+                <span>🏫 SDN Merdeka 01</span>
+              </div>
+            </div>
+            <div id="p-status-badge" class="status-badge approved">🟢 Disetujui</div>
+          </div>
+          <div class="profile-details-grid">
+            <div class="pd-item">
+              <div class="pd-icon">💰</div>
+              <div>
+                <div class="pd-label">Bantuan Diterima</div>
+                <div class="pd-value">Rp 450.000 / tahun</div>
+              </div>
+            </div>
+            <div class="pd-item">
+              <div class="pd-icon">📅</div>
+              <div>
+                <div class="pd-label">Pencairan Terakhir</div>
+                <div class="pd-value">15 Januari 2025</div>
+              </div>
+            </div>
+            <div class="pd-item">
+              <div class="pd-icon">🎯</div>
+              <div>
+                <div class="pd-label">Program</div>
+                <div class="pd-value">Bantuan PIP 2025</div>
+              </div>
+            </div>
+            <div class="pd-item">
+              <div class="pd-icon">🔄</div>
+              <div>
+                <div class="pd-label">Sinkronisasi Data</div>
+                <div class="pd-value" style="color:#16a34a">✅ Tersinkron</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Info Bar -->
+        <div class="quick-info">
+          <div class="qi-item">
+            <div class="qi-label">Periode</div>
+            <div class="qi-value">Tahun 2025</div>
+          </div>
+          <div class="qi-divider"></div>
+          <div class="qi-item">
+            <div class="qi-label">Dana Tersalurkan</div>
+            <div class="qi-value" style="color:#16a34a">Rp 4,2 Miliar</div>
+          </div>
+          <div class="qi-divider"></div>
+          <div class="qi-item">
+            <div class="qi-label">Instansi Aktif</div>
+            <div class="qi-value">237 Instansi</div>
+          </div>
+          <div class="qi-divider"></div>
+          <div class="qi-item">
+            <div class="qi-label">Update Terakhir</div>
+            <div class="qi-value">Hari ini, 08:30</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== TAB: STATUS BANTUAN ====== -->
+      <div id="tab-status" class="tab-content">
+        <div class="status-grid">
+
+          <div class="status-card approved">
+            <div class="sc-header">
+              <div class="sc-status-dot green"></div>
+              <h3>🟢 Disetujui</h3>
+              <span class="sc-count">9.204</span>
+            </div>
+            <p>Penerima telah diverifikasi dan bantuan siap dicairkan sesuai jadwal.</p>
+            <div class="sc-table">
+              <div class="sc-row header">
+                <span>Nama</span><span>NISN/NIK</span><span>Program</span>
+              </div>
+              <div class="sc-row"><span>Budi Santoso</span><span>1234567890</span><span>PIP</span></div>
+              <div class="sc-row"><span>Siti Rahayu</span><span>0987654321</span><span>BPNT</span></div>
+              <div class="sc-row"><span>Ahmad Fauzi</span><span>1122334455</span><span>PKH</span></div>
+            </div>
+          </div>
+
+          <div class="status-card held">
+            <div class="sc-header">
+              <div class="sc-status-dot yellow"></div>
+              <h3>🟡 Ditahan</h3>
+              <span class="sc-count">1.340</span>
+            </div>
+            <p>Pencairan ditahan sementara karena masalah teknis atau administrasi.</p>
+            <div class="sc-reasons">
+              <div class="reason-item">
+                <span class="reason-icon">🏦</span>
+                <div>
+                  <strong>Rekening Tidak Aktif</strong>
+                  <span class="reason-count">724 kasus</span>
+                </div>
+              </div>
+              <div class="reason-item">
+                <span class="reason-icon">🔄</span>
+                <div>
+                  <strong>Data Belum Sinkron</strong>
+                  <span class="reason-count">616 kasus</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-card needs-fix">
+            <div class="sc-header">
+              <div class="sc-status-dot orange"></div>
+              <h3>🟠 Perlu Perbaikan</h3>
+              <span class="sc-count">891</span>
+            </div>
+            <p>Data penerima memerlukan koreksi sebelum proses dapat dilanjutkan.</p>
+            <div class="sc-reasons">
+              <div class="reason-item">
+                <span class="reason-icon">🪪</span>
+                <div>
+                  <strong>NIK Tidak Sesuai</strong>
+                  <span class="reason-count">534 kasus</span>
+                </div>
+              </div>
+              <div class="reason-item">
+                <span class="reason-icon">📋</span>
+                <div>
+                  <strong>Dokumen Tidak Lengkap</strong>
+                  <span class="reason-count">357 kasus</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-card rejected">
+            <div class="sc-header">
+              <div class="sc-status-dot red"></div>
+              <h3>🔴 Ditolak</h3>
+              <span class="sc-count">412</span>
+            </div>
+            <p>Tidak memenuhi syarat atau terbukti menerima bantuan ganda.</p>
+            <div class="sc-reasons">
+              <div class="reason-item">
+                <span class="reason-icon">🚫</span>
+                <div>
+                  <strong>Tidak Memenuhi Syarat</strong>
+                  <span class="reason-count">298 kasus</span>
+                </div>
+              </div>
+              <div class="reason-item">
+                <span class="reason-icon">⚠️</span>
+                <div>
+                  <strong>Data Duplikat</strong>
+                  <span class="reason-count">114 kasus</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: RIWAYAT PENCAIRAN ====== -->
+      <div id="tab-riwayat" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <h3>📜 Riwayat Pencairan Dana</h3>
+            <div class="table-actions">
+              <select class="filter-select">
+                <option>Semua Tahun</option>
+                <option>2025</option>
+                <option>2024</option>
+                <option>2023</option>
+              </select>
+              <button class="btn-sm-primary" onclick="showTab('export')">📤 Export</button>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Tahun</th>
+                <th>Tahap</th>
+                <th>Tanggal</th>
+                <th>Jumlah</th>
+                <th>Penerima</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025</td>
+                <td>Tahap I</td>
+                <td>15 Jan 2025</td>
+                <td><strong>Rp 450.000</strong></td>
+                <td>9.204 orang</td>
+                <td><span class="badge-status success">✅ Cair</span></td>
+              </tr>
+              <tr>
+                <td>2025</td>
+                <td>Tahap II</td>
+                <td>15 Mar 2025</td>
+                <td><strong>Rp 450.000</strong></td>
+                <td>8.940 orang</td>
+                <td><span class="badge-status pending">⏳ Proses</span></td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>Tahap III</td>
+                <td>20 Des 2024</td>
+                <td><strong>Rp 450.000</strong></td>
+                <td>11.203 orang</td>
+                <td><span class="badge-status success">✅ Cair</span></td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>Tahap II</td>
+                <td>15 Sep 2024</td>
+                <td><strong>Rp 450.000</strong></td>
+                <td>11.105 orang</td>
+                <td><span class="badge-status success">✅ Cair</span></td>
+              </tr>
+              <tr>
+                <td>2024</td>
+                <td>Tahap I</td>
+                <td>10 Mar 2024</td>
+                <td><strong>Rp 450.000</strong></td>
+                <td>10.887 orang</td>
+                <td><span class="badge-status success">✅ Cair</span></td>
+              </tr>
+              <tr>
+                <td>2023</td>
+                <td>Tahap III</td>
+                <td>22 Des 2023</td>
+                <td><strong>Rp 400.000</strong></td>
+                <td>10.340 orang</td>
+                <td><span class="badge-status success">✅ Cair</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="table-footer">
+            Total dana tersalurkan: <strong>Rp 4,2 Miliar</strong> | 6 periode pencairan
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: TIMELINE ====== -->
+      <div id="tab-timeline" class="tab-content">
+        <div class="timeline-card">
+          <h3>🗺️ Alur Proses Bantuan</h3>
+          <p style="color:#64748b;margin-bottom:2rem">Setiap pengajuan bantuan melalui tahapan berikut ini</p>
+
+          <div class="timeline-flow">
+            <div class="tl-step completed">
+              <div class="tl-icon">📝</div>
+              <div class="tl-content">
+                <h4>Pengajuan</h4>
+                <p>Data penerima diajukan oleh instansi (sekolah/dinas) ke sistem SIPANDA</p>
+                <div class="tl-meta">✅ Selesai • 3-5 hari kerja</div>
+              </div>
+              <div class="tl-connector done"></div>
+            </div>
+
+            <div class="tl-step completed">
+              <div class="tl-icon">🔍</div>
+              <div class="tl-content">
+                <h4>Verifikasi Data</h4>
+                <p>Pengecekan NIK, NISN, status ekonomi, dan duplikasi dengan Dukcapil & DTKS</p>
+                <div class="tl-meta">✅ Selesai • 5-7 hari kerja</div>
+              </div>
+              <div class="tl-connector done"></div>
+            </div>
+
+            <div class="tl-step active">
+              <div class="tl-icon">✅</div>
+              <div class="tl-content">
+                <h4>Persetujuan</h4>
+                <p>Pejabat berwenang menyetujui daftar penerima yang telah terverifikasi</p>
+                <div class="tl-meta">⏳ Sedang Berjalan • 2-3 hari kerja</div>
+              </div>
+              <div class="tl-connector active"></div>
+            </div>
+
+            <div class="tl-step pending">
+              <div class="tl-icon">💰</div>
+              <div class="tl-content">
+                <h4>Pencairan</h4>
+                <p>Dana ditransfer ke rekening penerima atau disalurkan melalui bank mitra</p>
+                <div class="tl-meta">🕐 Menunggu • Estimasi 5-7 hari</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-legend">
+            <span class="tl-leg completed">✅ Selesai</span>
+            <span class="tl-leg active">⏳ Berjalan</span>
+            <span class="tl-leg pending">🕐 Menunggu</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== TAB: AUDIT TRAIL ====== -->
+      <div id="tab-audit" class="tab-content">
+        <div class="table-card">
+          <div class="table-header">
+            <div>
+              <h3>🔍 Audit Trail</h3>
+              <p style="color:#64748b;font-size:.85rem">Rekam jejak seluruh aktivitas sistem — fitur keamanan premium</p>
+            </div>
+            <div class="audit-filters">
+              <select class="filter-select">
+                <option>Semua Aktivitas</option>
+                <option>Login</option>
+                <option>Perubahan Data</option>
+                <option>Persetujuan</option>
+              </select>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Waktu</th>
+                <th>Aktivitas</th>
+                <th>Petugas</th>
+                <th>Target</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>24 Feb 2025 09:45</td>
+                <td>Login sistem</td>
+                <td>Admin Pusat</td>
+                <td>—</td>
+                <td><span class="badge-status success">✅ Sukses</span></td>
+              </tr>
+              <tr>
+                <td>24 Feb 2025 09:52</td>
+                <td>Import data batch</td>
+                <td>Op. Sekolah 12</td>
+                <td>342 data penerima</td>
+                <td><span class="badge-status success">✅ Sukses</span></td>
+              </tr>
+              <tr>
+                <td>24 Feb 2025 10:15</td>
+                <td>Ubah status NIK</td>
+                <td>Admin Dinas</td>
+                <td>3201XXXXXX (NIK tidak sesuai)</td>
+                <td><span class="badge-status warning">⚠️ Diubah</span></td>
+              </tr>
+              <tr>
+                <td>24 Feb 2025 11:30</td>
+                <td>Persetujuan Tahap II</td>
+                <td>Kab. Admin</td>
+                <td>8.940 penerima disetujui</td>
+                <td><span class="badge-status success">✅ Disetujui</span></td>
+              </tr>
+              <tr>
+                <td>24 Feb 2025 13:00</td>
+                <td>Export data PDF</td>
+                <td>Admin Pusat</td>
+                <td>Laporan Tahap II 2025</td>
+                <td><span class="badge-status success">✅ Sukses</span></td>
+              </tr>
+              <tr>
+                <td>23 Feb 2025 16:22</td>
+                <td>Hapus data duplikat</td>
+                <td>Admin Dinas</td>
+                <td>114 data duplikat</td>
+                <td><span class="badge-status danger">🗑️ Dihapus</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ====== TAB: EXPORT ====== -->
+      <div id="tab-export" class="tab-content">
+        <div class="export-layout">
+          <div class="export-card">
+            <div class="export-icon">📄</div>
+            <h3>Export Laporan PDF</h3>
+            <p>Laporan lengkap penerima bantuan dengan format resmi dan tanda tangan digital</p>
+            <div class="export-options">
+              <label><input type="checkbox" checked> Data Penerima</label>
+              <label><input type="checkbox" checked> Status Verifikasi</label>
+              <label><input type="checkbox"> Riwayat Pencairan</label>
+              <label><input type="checkbox"> Audit Trail</label>
+            </div>
+            <button class="btn-export pdf" onclick="simulateExport('PDF')">
+              📄 Download PDF
+            </button>
+          </div>
+
+          <div class="export-card">
+            <div class="export-icon">📊</div>
+            <h3>Export Data Excel</h3>
+            <p>Data tabular penerima bantuan dalam format spreadsheet untuk analisis lebih lanjut</p>
+            <div class="export-options">
+              <label><input type="checkbox" checked> Sheet Penerima</label>
+              <label><input type="checkbox" checked> Sheet Status</label>
+              <label><input type="checkbox" checked> Sheet Riwayat</label>
+              <label><input type="checkbox"> Pivot Table</label>
+            </div>
+            <button class="btn-export excel" onclick="simulateExport('Excel')">
+              📊 Download Excel
+            </button>
+          </div>
+
+          <div class="export-card">
+            <div class="export-icon">🔗</div>
+            <h3>Sinkronisasi Data</h3>
+            <p>Sinkronkan data dengan sistem pusat Dukcapil, DTKS, dan Dapodik secara real-time</p>
+            <div class="sync-status-list">
+              <div class="sync-item done"><span>✅</span> Dukcapil (NIK) — Tersinkron</div>
+              <div class="sync-item done"><span>✅</span> DTKS (PKH/BPNT) — Tersinkron</div>
+              <div class="sync-item pending"><span>⏳</span> Dapodik (NISN) — Proses</div>
+              <div class="sync-item done"><span>✅</span> Bank Mitra — Tersinkron</div>
+            </div>
+            <button class="btn-export sync" onclick="simulateExport('Sync')">
+              🔄 Sinkronkan Sekarang
+            </button>
+          </div>
+        </div>
+
+        <!-- Export Notification -->
+        <div id="export-notif" class="export-notif" style="display:none">
+          <span id="export-msg">✅ Export berhasil! File sedang diunduh... (Simulasi)</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
