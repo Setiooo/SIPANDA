@@ -1,10 +1,9 @@
 # 🏛️ SIPANDA — Sistem Integrasi Penerima Bantuan Daerah
+Prototype resmi sistem penyaluran bantuan sosial daerah
 
-**Prototype resmi sistem penyaluran bantuan sosial daerah**
+🚀 Cara Jalankan di GitHub Pages
 
-## 🚀 Cara Jalankan di GitHub Pages
-
-1. **Fork atau upload** 3 file ini ke repo GitHub kamu:
+1. Fork atau upload** 3 file ini ke repo GitHub kamu:
    - `index.html`
    - `style.css`
    - `app.js`
